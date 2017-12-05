@@ -3,8 +3,9 @@ using XInputDotNetPure;
 
 public class Bullet : MonoBehaviour
 {
-    public PlayerIndex playerIndex;
+    [SerializeField] private GameObject explosionPrefab;
 
+    [HideInInspector] public PlayerIndex playerIndex;
     private Collider col;
 
     void Start()
@@ -25,9 +26,15 @@ public class Bullet : MonoBehaviour
         if (g.tag == "Bullet" && g.GetComponent<Bullet>().playerIndex == playerIndex)
         {
             Physics.IgnoreCollision(other.collider, col);
-            Debug.Log("Ignored");
+            return;
         }
 
-        Debug.Log(g.tag);
+        if (g.tag == "Wall")
+        {
+            GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            Destroy(explosion, 2f);
+            Destroy(gameObject);
+            return;
+        }
     }
 }
