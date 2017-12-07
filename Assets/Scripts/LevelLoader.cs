@@ -31,18 +31,28 @@ public class LevelLoader : MonoBehaviour
         if (!loading)
         {
             loading = true;
+            string mapText = null;
 
-            using (UnityWebRequest www = UnityWebRequest.Get($"http://papertopixels.tk/map/{id}"))
+            if ((mapText = FileCache.LoadMap(id)) == null)
             {
-                yield return www.SendWebRequest();
-
-                if (www.isNetworkError || www.isHttpError)
-                    Debug.Log(www.error);
-                else
+                using (UnityWebRequest www = UnityWebRequest.Get($"http://papertopixels.tk/map/{id}"))
                 {
-                    map = new Map(www.downloadHandler.text, allScale);
-                    GenerateLevel();
+                    yield return www.SendWebRequest();
+
+                    if (www.isNetworkError || www.isHttpError)
+                        Debug.Log(www.error);
+                    else
+                    {
+                        mapText = www.downloadHandler.text;
+                        FileCache.SaveMap(mapText, id);
+                    }
                 }
+            }
+
+            if (mapText != null)
+            {
+                map = new Map(mapText, allScale);
+                GenerateLevel();
             }
 
             loading = false;

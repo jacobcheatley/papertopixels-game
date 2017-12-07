@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
     private bool canShoot = true;
     private GamePadState state;
     private GamePadState prevState;
+    private Vector3 currentLook = Vector3.forward;
 
     void Awake()
     {
@@ -59,9 +60,7 @@ public class Player : MonoBehaviour
         bool leftTriggerPress = state.Triggers.Left >= triggerThreshold;
 
         if (canDash && leftTriggerPress && leftStick.sqrMagnitude >= 0.5f)
-        {
             StartCoroutine(Dash(leftStick.normalized));
-        }
 
         if (!dashing)
             rb.velocity = leftStick * maxSpeed;
@@ -70,11 +69,17 @@ public class Player : MonoBehaviour
     private void Shooting()
     {
         Vector3 rightStick = new Vector3(state.ThumbSticks.Right.X, 0, state.ThumbSticks.Right.Y).normalized;
+        bool shooting = state.Triggers.Right >= triggerThreshold ||
+            state.Buttons.RightShoulder == ButtonState.Pressed && prevState.Buttons.RightShoulder == ButtonState.Released;
+
         if (rightStick.sqrMagnitude >= deadMag)
         {
-            gameObject.transform.rotation = Quaternion.LookRotation(rightStick);
-            Shoot(rightStick);
+            transform.rotation = Quaternion.LookRotation(rightStick);
+            currentLook = rightStick.normalized;
         }
+
+        if (shooting)
+            Shoot(currentLook);
     }
 
     private void Effects()

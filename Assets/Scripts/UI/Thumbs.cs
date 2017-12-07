@@ -25,17 +25,25 @@ public class Thumbs : MonoBehaviour
         StartCoroutine(LoadAllThumbs());
     }
 
+    // TODO: Caching would be really really nice
     private IEnumerator LoadAllThumbs()
     {
         for (int i = 0; i < 2; i++)
         {
-            string url = $"http://papertopixels.tk/thumb/{i}";
-            WWW www = new WWW(url);
-            yield return www;
+            Texture2D tex;
+
+            if ((tex = FileCache.LoadThumb(i)) == null)
+            {
+                string url = $"http://papertopixels.tk/thumb/{i}";
+                WWW www = new WWW(url);
+                yield return www;
+                tex = www.texture;
+                FileCache.SaveThumb(tex, i);
+            }
 
             GameObject image = Instantiate(thumbPrefab, transform);
             image.name = $"Thumb {i}";
-            Sprite sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0, 0));
+            Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0, 0));
             image.GetComponent<Image>().sprite = sprite;
             AddThumb(image);
         }
@@ -76,7 +84,6 @@ public class Thumbs : MonoBehaviour
     {
         // TODO: Nice animation on switch
         float target = index * spacing;
-        Debug.Log(target);
         rectTransform.localPosition = new Vector3(-target, rectTransform.localPosition.y);
     }
 
