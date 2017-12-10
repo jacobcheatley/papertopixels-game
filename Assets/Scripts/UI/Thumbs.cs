@@ -56,22 +56,14 @@ public class Thumbs : MonoBehaviour
             // TODO: Actual first player
             prevState = state;
             state = GamePad.GetState(PlayerIndex.One);
-            bool left =
-                (state.DPad.Left == ButtonState.Pressed && prevState.DPad.Left == ButtonState.Released) ||
-                (state.ThumbSticks.Left.X < -0.3f && prevState.ThumbSticks.Left.X > -0.3f) ||
-                (state.Buttons.LeftShoulder == ButtonState.Pressed && prevState.Buttons.LeftShoulder == ButtonState.Released);
-            bool right =
-                (state.DPad.Right == ButtonState.Pressed && prevState.DPad.Right == ButtonState.Released) ||
-                (state.ThumbSticks.Left.X > 0.3f && prevState.ThumbSticks.Left.X < 0.3f) ||
-                (state.Buttons.RightShoulder == ButtonState.Pressed && prevState.Buttons.RightShoulder == ButtonState.Released);
 
-            if (left)
+            if (Controller.LeftPress(prevState, state))
             {
                 index--;
                 if (index < 0) index = 0;
                 else SnapToIndex();
             }
-            else if (right)
+            else if (Controller.RightPress(prevState, state))
             {
                 index++;
                 if (index >= thumbs.Count) index = thumbs.Count - 1;

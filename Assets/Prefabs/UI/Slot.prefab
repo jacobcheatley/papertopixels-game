@@ -28,7 +28,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1216851504426554
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,6 +85,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerIndicator: {fileID: 1216851504426554}
+  colors:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
+  - {r: 0, g: 0, b: 1, a: 1}
+  - {r: 1, g: 1, b: 0, a: 1}
+  - {r: 0, g: 1, b: 1, a: 1}
+  - {r: 1, g: 0, b: 1, a: 1}
+  - {r: 0.07169118, g: 0.46970093, b: 0.5735294, a: 1}
+  - {r: 1, g: 0.7241379, b: 0, a: 1}
+  colorImage: {fileID: 114078048836974052}
 --- !u!114 &114946907210145610
 MonoBehaviour:
   m_ObjectHideFlags: 1
