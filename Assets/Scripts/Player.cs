@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
     private GamePadState state;
     private GamePadState prevState;
     private Vector3 currentLook = Vector3.forward;
+    private bool shooting;
 
     public void Init(SlotInfo slotInfo)
     {
@@ -73,7 +74,7 @@ public class Player : MonoBehaviour
     private void Shooting()
     {
         Vector3 rightStick = new Vector3(state.ThumbSticks.Right.X, 0, state.ThumbSticks.Right.Y).normalized;
-        bool shooting = state.Triggers.Right >= triggerThreshold ||
+        shooting = state.Triggers.Right >= triggerThreshold ||
             state.Buttons.RightShoulder == ButtonState.Pressed && prevState.Buttons.RightShoulder == ButtonState.Released;
 
         if (rightStick.sqrMagnitude >= deadMag)
@@ -89,7 +90,7 @@ public class Player : MonoBehaviour
     private void Effects()
     {
         float left = dashing ? 0.5f : 0;
-        float right = (canShoot ? 0 : 0.2f) + (dashing ? 0.1f : 0);
+        float right = (shooting ? 0.1f : 0) + (canShoot ? 0 : 0.1f) + (dashing ? 0.1f : 0);
         GamePad.SetVibration(playerIndex, left, right);
     }
 
@@ -124,5 +125,10 @@ public class Player : MonoBehaviour
         dashing = false;
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
+    }
+
+    public PlayerIndex GetIndex()
+    {
+        return playerIndex;
     }
 }

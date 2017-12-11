@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 114284938190587844}
   m_Layer: 0
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -156,7 +156,7 @@ Transform:
   m_GameObject: {fileID: 1756030505500362}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.39999998, y: 0.39999998, z: 0.39999998}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 4110921843743178}
   m_RootOrder: 3
@@ -591,6 +591,10 @@ MonoBehaviour:
     type: 2}
   meshRenderer: {fileID: 23658640030905828}
   trailRenderer: {fileID: 96634963640523518}
+  explosionForce: 20
+  explosionRadius: 3
+  playerIndex: 0
+  color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114679205073316624
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -638,8 +642,8 @@ MonoBehaviour:
   dashCooldown: 0.1
   dashSpeed: 30
   dashDuration: 0.2
-  shootCooldown: 0.2
-  bulletSpeed: 40
+  shootCooldown: 0.5
+  bulletSpeed: 45
 --- !u!135 &135924009480594820
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -650,7 +654,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &136540756445805698
 CapsuleCollider:
