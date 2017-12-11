@@ -4,9 +4,26 @@ using XInputDotNetPure;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private GameObject explosionPrefab;
+    [SerializeField] private MeshRenderer meshRenderer;
+    [SerializeField] private TrailRenderer trailRenderer;
 
-    [HideInInspector] public PlayerIndex playerIndex;
+    private PlayerIndex playerIndex;
     private Collider col;
+
+    public void Init(SlotInfo slotInfo)
+    {
+        playerIndex = slotInfo.Index;
+
+        // Appearance
+        Color color = slotInfo.Color;
+        Material newMaterial = new Material(meshRenderer.material);
+        newMaterial.color = color;
+        meshRenderer.material = newMaterial;
+
+        // Trail renderer color
+        trailRenderer.startColor = color;
+        trailRenderer.endColor = new Color(color.r, color.g, color.b, 0);
+    }
 
     void Start()
     {

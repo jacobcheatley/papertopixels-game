@@ -14,6 +14,8 @@ public class PlayerSlot : MonoBehaviour
     private int colorIndex;
     private int slotIndex;
     private static List<int> ignoreIndices = new List<int>();
+    private GamePadState state;
+    private GamePadState prevState;
 
     public void Init(PlayerIndex index)
     {
@@ -57,6 +59,17 @@ public class PlayerSlot : MonoBehaviour
         gameObject.SetActive(true);
     }
 
+    void Update()
+    {
+        prevState = state;
+        state = GamePad.GetState(playerIndex);
+        
+        if (Controller.LeftPress(prevState, state))
+            PrevColor();
+        else if (Controller.RightPress(prevState, state))
+            NextColor();
+    }
+
     private void DisplayColor()
     {
         colorImage.color = colors[colorIndex];
@@ -90,8 +103,23 @@ public class PlayerSlot : MonoBehaviour
         DisplayColor();
     }
 
-    public Color GetColor()
+    public SlotInfo GetInfo()
     {
-        return colors[colorIndex];
+        return new SlotInfo
+        {
+            Color = colors[colorIndex],
+            Index = playerIndex
+        };
+    }
+}
+
+public struct SlotInfo
+{
+    public PlayerIndex Index;
+    public Color Color;
+
+    public override string ToString()
+    {
+        return $"{Index} {Color}";
     }
 }

@@ -6,8 +6,8 @@ using UnityEngine.Rendering;
 
 public class LevelLoader : MonoBehaviour
 {
-    [Header("Test")]
-    [SerializeField] private int id = 0;
+    [Header("Prefabs")]
+    [SerializeField] private GameObject playerPrefab;
 
     [Header("Function")]
     [SerializeField] private Transform levelContainer;
@@ -19,14 +19,19 @@ public class LevelLoader : MonoBehaviour
 
     private bool loading;
     private Map map;
-
+    private static LevelLoader instance;
 
     void Start()
     {
-        StartCoroutine(Load());
+        instance = this;
     }
 
-    private IEnumerator Load()
+    public static void Create(int id)
+    {
+        instance.StartCoroutine(instance.Load(id));
+    }
+
+    private IEnumerator Load(int id)
     {
         if (!loading)
         {
@@ -65,9 +70,19 @@ public class LevelLoader : MonoBehaviour
         Debug.Log(map);
         GenerateGround();
         GenerateMarkers();
+        PlacePlayers();
     }
 
     #region Generation
+    private void PlacePlayers()
+    {
+        foreach (SlotInfo playerSlot in Persistent.PlayerSlots)
+        {
+            GameObject player = Instantiate(playerPrefab, Vector3.up, Quaternion.identity, levelContainer);
+            player.GetComponent<Player>().Init(playerSlot);
+        }
+    }
+
     private void GenerateGround()
     {
         GameObject ground = GameObject.CreatePrimitive(PrimitiveType.Plane);

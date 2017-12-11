@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using XInputDotNetPure;
 
 public class PlayerJoin : MonoBehaviour
@@ -9,7 +10,6 @@ public class PlayerJoin : MonoBehaviour
     private PlayerSlot[] slots = new PlayerSlot[4];
     private bool[] joined = { false, false, false, false };
     private int currentSlot;
-    private GamePadState[] prevStates = new GamePadState[4];
 
     void Start()
     {
@@ -41,16 +41,10 @@ public class PlayerJoin : MonoBehaviour
             }
             else if (state.Buttons.Start == ButtonState.Pressed && currentSlot > 1)
                 StartGame();
-            else if (joined[i] && Controller.LeftPress(prevStates[i], state))
-                slots[i].PrevColor();
-            else if (joined[i] && Controller.RightPress(prevStates[i], state))
-                slots[i].NextColor();
-
-            prevStates[i] = state;
         }
     }
 
-    void AssignNextSlot(PlayerIndex index)
+    private void AssignNextSlot(PlayerIndex index)
     {
         slots[currentSlot].Init(index);
         currentSlot++;
@@ -59,13 +53,15 @@ public class PlayerJoin : MonoBehaviour
         //TODO: 4 players auto start??
     }
 
-    void UpdateHoverPosition()
+    private void UpdateHoverPosition()
     {
         emptySlotHover.anchorMin = emptySlotHover.anchorMax = slots[currentSlot].GetComponent<RectTransform>().anchorMin;
     }
 
-    void StartGame()
+    private void StartGame()
     {
         Debug.Log("Start Game");
+        Persistent.SetPlayerSlots(slots.Take(currentSlot).Select(s => s.GetInfo()).ToList());
+        SceneControl.LoadGame();
     }
 }

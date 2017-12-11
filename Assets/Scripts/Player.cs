@@ -7,9 +7,9 @@ public class Player : MonoBehaviour
     // Editor Fields
     [Header("References")]
     [SerializeField] private Transform bulletOrigin;
-    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private GameObject bulletObject;
+    [SerializeField] private PlayerAppearance appearance;
     [Header("Control")]
-    [SerializeField] public PlayerIndex playerIndex;
     [SerializeField] private float maxSpeed = 8.0f;
     [Header("Dash")]
     [SerializeField] private float dashCooldown = 2.0f;
@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     private const float triggerThreshold = 0.5f;
 
     // Private Variables
+    private PlayerIndex playerIndex;
     private Rigidbody rb;
     private Collider col;
     private bool dashing = false;
@@ -33,13 +34,16 @@ public class Player : MonoBehaviour
     private GamePadState prevState;
     private Vector3 currentLook = Vector3.forward;
 
-    void Awake()
+    public void Init(SlotInfo slotInfo)
     {
-        state = prevState = GamePad.GetState(playerIndex);
+        playerIndex = slotInfo.Index;
+        appearance.SetColor(slotInfo.Color);
+        bulletObject.GetComponent<Bullet>().Init(slotInfo);
     }
 
     void Start()
     {
+        state = prevState = GamePad.GetState(playerIndex);
         rb = GetComponent<Rigidbody>();
         col = rb.GetComponent<Collider>();
     }
@@ -93,10 +97,10 @@ public class Player : MonoBehaviour
     {
         if (canShoot)
         {
-            GameObject bullet = Instantiate(bulletPrefab, bulletOrigin.position, Quaternion.LookRotation(direction));
+            GameObject bullet = Instantiate(bulletObject, bulletOrigin.position, Quaternion.LookRotation(direction));
             bullet.GetComponent<Rigidbody>().velocity = direction * bulletSpeed;
-            bullet.GetComponent<Bullet>().playerIndex = playerIndex;
             Physics.IgnoreCollision(col, bullet.GetComponent<Collider>());
+            bullet.SetActive(true);
             StartCoroutine(Reload());
             Destroy(bullet, 1f);
         }
