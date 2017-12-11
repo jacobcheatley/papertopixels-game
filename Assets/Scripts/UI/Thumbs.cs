@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 using XInputDotNetPure;
 
@@ -28,7 +29,21 @@ public class Thumbs : MonoBehaviour
 
     private IEnumerator LoadAllThumbs()
     {
-        for (int i = 0; i < 2; i++)
+        int[] maps = {0};
+        using (UnityWebRequest www = UnityWebRequest.Get("http://papertopixels.tk/maps"))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+                Debug.Log(www.error);
+            else
+            {
+                MapList mapList = JsonUtility.FromJson<MapList>(www.downloadHandler.text);
+                maps = mapList.maps;
+            }
+        }
+
+        foreach (int i in maps)
         {
             Texture2D tex;
 
@@ -95,4 +110,10 @@ public class Thumbs : MonoBehaviour
         thumbs.Add(thumb);
         ids.Add(id);
     }
+}
+
+// JSONUtility is dumb
+class MapList
+{
+    public int[] maps;
 }
