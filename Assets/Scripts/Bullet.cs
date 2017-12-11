@@ -17,7 +17,6 @@ public class Bullet : MonoBehaviour
 
         // Appearance
         color = slotInfo.Color;
-        Debug.Log(color);
         Material newMaterial = new Material(meshRenderer.material);
         newMaterial.color = color;
         meshRenderer.material = newMaterial;
@@ -34,9 +33,6 @@ public class Bullet : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        Debug.Log(playerIndex);
-        Debug.Log(color);
-
         GameObject g = other.gameObject;
 
 //        if (g.tag == "Player" && g.GetComponent<Player>().playerIndex == playerIndex)
@@ -54,9 +50,9 @@ public class Bullet : MonoBehaviour
         if (g.tag == "Wall")
         {
             GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            // TODO: Smarter way of changing color?
             ParticleSystem.ColorOverLifetimeModule colorOverLifetime = explosion.GetComponent<ParticleSystem>().colorOverLifetime;
             Gradient grad = new Gradient();
-            Debug.Log(color);
             grad.SetKeys(
                 new[] {new GradientColorKey(color, 0),},
                 new[] {new GradientAlphaKey(1, 0), new GradientAlphaKey(0, 1)}

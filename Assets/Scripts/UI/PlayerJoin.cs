@@ -65,6 +65,6 @@ public class PlayerJoin : MonoBehaviour
     {
         Debug.Log("Start Game");
         Persistent.SetPlayerSlots(slots.Take(currentSlot).Select(s => s.GetInfo()).ToList());
-        SceneControl.LoadGame();
+        SceneControl.ToLevelSelect();
     }
 }

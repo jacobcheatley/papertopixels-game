@@ -11,6 +11,7 @@ public class Thumbs : MonoBehaviour
 
     private float spacing = 141 + 20;
     private List<GameObject> thumbs = new List<GameObject>();
+    private List<int> ids = new List<int>();
     private int index = 0;
     private RectTransform rectTransform;
 
@@ -25,7 +26,6 @@ public class Thumbs : MonoBehaviour
         StartCoroutine(LoadAllThumbs());
     }
 
-    // TODO: Caching would be really really nice
     private IEnumerator LoadAllThumbs()
     {
         for (int i = 0; i < 2; i++)
@@ -45,7 +45,7 @@ public class Thumbs : MonoBehaviour
             image.name = $"Thumb {i}";
             Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0, 0));
             image.GetComponent<Image>().sprite = sprite;
-            AddThumb(image);
+            AddThumb(image, i);
         }
     }
 
@@ -53,9 +53,15 @@ public class Thumbs : MonoBehaviour
     {
         if (thumbs.Count > 0)
         {
-            // TODO: Actual first player
             prevState = state;
-            state = GamePad.GetState(PlayerIndex.One);
+            try
+            {
+                state = GamePad.GetState(Persistent.PlayerSlots[0].Index);
+            }
+            catch (Exception)
+            {
+                // Ignore - only happens on first load
+            }
 
             if (Controller.LeftPress(prevState, state))
             {
@@ -69,6 +75,10 @@ public class Thumbs : MonoBehaviour
                 if (index >= thumbs.Count) index = thumbs.Count - 1;
                 else SnapToIndex();
             }
+            else if (state.Buttons.A == ButtonState.Pressed && prevState.Buttons.A == ButtonState.Released)
+            {
+                SceneControl.ToGame(ids[index]);
+            }
         }
     }
 
@@ -79,9 +89,10 @@ public class Thumbs : MonoBehaviour
         rectTransform.localPosition = new Vector3(-target, rectTransform.localPosition.y);
     }
 
-    private void AddThumb(GameObject thumb)
+    private void AddThumb(GameObject thumb, int id)
     {
         thumb.transform.localPosition = Vector3.right * thumbs.Count * spacing;
         thumbs.Add(thumb);
+        ids.Add(id);
     }
 }
