@@ -40,7 +40,10 @@ public class PlayerJoin : MonoBehaviour
                 AssignNextSlot(index);
             }
             else if (state.Buttons.Start == ButtonState.Pressed && currentSlot > 1)
+            {
                 StartGame();
+                break;
+            }
         }
     }
 
