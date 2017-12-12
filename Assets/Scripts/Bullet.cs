@@ -78,7 +78,7 @@ public class Bullet : MonoBehaviour
             Rigidbody rb = hit.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                rb.AddExplosionForce(explosionForce, pos, 0, 0.01f, ForceMode.Impulse);
+                rb.AddExplosionForce(explosionForce, pos, explosionRadius, 0.01f, ForceMode.Impulse);
                 Player player = hit.GetComponent<Player>();
                 if (player != null)
                     Debug.Log($"{playerIndex} hit {player.GetIndex()} INdirectly");

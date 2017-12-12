@@ -181,7 +181,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1400251674208912}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4919956956759522}
@@ -332,7 +332,7 @@ Rigidbody:
   m_GameObject: {fileID: 1014925658318658}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 3
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -346,7 +346,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1756030505500362}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.05
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
@@ -550,7 +550,7 @@ Light:
   serializedVersion: 8
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.3
   m_Range: 8
   m_SpotAngle: 40
   m_CookieSize: 10
@@ -591,8 +591,8 @@ MonoBehaviour:
     type: 2}
   meshRenderer: {fileID: 23658640030905828}
   trailRenderer: {fileID: 96634963640523518}
-  explosionForce: 20
-  explosionRadius: 3
+  explosionForce: 10
+  explosionRadius: 2.5
   playerIndex: 0
   color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114679205073316624
@@ -638,8 +638,10 @@ MonoBehaviour:
   bulletOrigin: {fileID: 4885568476587120}
   bulletObject: {fileID: 1756030505500362}
   appearance: {fileID: 114679205073316624}
-  maxSpeed: 8
-  dashCooldown: 0.1
+  followUIPrefab: {fileID: 1173959732142898, guid: 01bc2867f844a3c4fb365d3977cb23b1,
+    type: 2}
+  accelFactor: 16
+  dashCooldown: 1.5
   dashSpeed: 30
   dashDuration: 0.2
   shootCooldown: 0.5

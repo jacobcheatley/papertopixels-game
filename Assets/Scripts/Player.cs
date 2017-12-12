@@ -9,8 +9,9 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform bulletOrigin;
     [SerializeField] private GameObject bulletObject;
     [SerializeField] private PlayerAppearance appearance;
+    [SerializeField] private GameObject followUIPrefab;
     [Header("Control")]
-    [SerializeField] private float maxSpeed = 8.0f;
+    [SerializeField] private float accelFactor = 8.0f;
     [Header("Dash")]
     [SerializeField] private float dashCooldown = 2.0f;
     [SerializeField] private float dashSpeed = 30.0f;
@@ -34,6 +35,7 @@ public class Player : MonoBehaviour
     private GamePadState prevState;
     private Vector3 currentLook = Vector3.forward;
     private bool shooting;
+    private PlayerUI playerUI;
 
     public void Init(SlotInfo slotInfo)
     {
@@ -47,6 +49,9 @@ public class Player : MonoBehaviour
         state = prevState = GamePad.GetState(playerIndex);
         rb = GetComponent<Rigidbody>();
         col = rb.GetComponent<Collider>();
+
+        playerUI = Instantiate(followUIPrefab).GetComponent<PlayerUI>();
+        playerUI.Init(transform);
     }
 
     void Update()
@@ -59,16 +64,32 @@ public class Player : MonoBehaviour
         Effects();
     }
 
+    void OnCollisionEnter(Collision other)
+    {
+        GameObject g = other.gameObject;
+
+        if (g.tag == "Player")
+        {
+            if (dashing)
+            {
+                Player player = g.GetComponent<Player>();
+                Debug.Log($"{playerIndex} hit {player.GetIndex()} with dash");
+//                g.GetComponent<Rigidbody>().AddForce(rb.velocity, ForceMode.Impulse);
+            }
+
+        }
+    }
+
     private void Movement()
     {
         Vector3 leftStick = Vector3.ClampMagnitude(new Vector3(state.ThumbSticks.Left.X, 0, state.ThumbSticks.Left.Y), 1);
-        bool leftTriggerPress = state.Triggers.Left >= triggerThreshold;
+        bool dashButton = state.Triggers.Left >= triggerThreshold || state.Buttons.LeftShoulder == ButtonState.Pressed;
 
-        if (canDash && leftTriggerPress && leftStick.sqrMagnitude >= 0.5f)
+        if (canDash && dashButton && leftStick.sqrMagnitude >= 0.5f)
             StartCoroutine(Dash(leftStick.normalized));
 
         if (!dashing)
-            rb.velocity = leftStick * maxSpeed;
+            rb.AddForce(leftStick * accelFactor);
     }
 
     private void Shooting()
@@ -123,6 +144,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(dashDuration);
         GamePad.SetVibration(playerIndex, 0, 0);
         dashing = false;
+        playerUI.StartCooldown(dashCooldown);
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
     }
