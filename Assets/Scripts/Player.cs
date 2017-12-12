@@ -119,6 +119,7 @@ public class Player : MonoBehaviour
     {
         if (canShoot)
         {
+            // Bullet shot
             GameObject bullet = Instantiate(bulletObject, bulletOrigin.position, Quaternion.LookRotation(direction));
             bullet.GetComponent<Rigidbody>().velocity = direction * bulletSpeed;
             Physics.IgnoreCollision(col, bullet.GetComponent<Collider>());
@@ -140,11 +141,9 @@ public class Player : MonoBehaviour
         dashing = true;
         canDash = false;
         rb.velocity = dashSpeed * direction;
-        GamePad.SetVibration(playerIndex, 0.3f, 0.1f);
+        playerUI.StartCooldown(dashCooldown + dashDuration);
         yield return new WaitForSeconds(dashDuration);
-        GamePad.SetVibration(playerIndex, 0, 0);
         dashing = false;
-        playerUI.StartCooldown(dashCooldown);
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
     }

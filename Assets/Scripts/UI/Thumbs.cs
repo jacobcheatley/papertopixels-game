@@ -10,7 +10,7 @@ public class Thumbs : MonoBehaviour
 {
     [SerializeField] private GameObject thumbPrefab;
 
-    private float spacing = 141 + 20;
+    private float spacing = 141 + 30;
     private List<GameObject> thumbs = new List<GameObject>();
     private List<int> ids = new List<int>();
     private int index = 0;

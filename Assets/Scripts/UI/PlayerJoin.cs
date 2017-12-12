@@ -6,13 +6,16 @@ public class PlayerJoin : MonoBehaviour
 {
     [SerializeField] private GameObject slotPrefab;
     [SerializeField] private RectTransform emptySlotHover;
+    [SerializeField] private GameObject startPrompt;
 
     private PlayerSlot[] slots = new PlayerSlot[4];
     private bool[] joined = { false, false, false, false };
-    private int currentSlot;
+    private int nextSlotNumber;
 
     void Start()
     {
+        startPrompt.SetActive(false);
+
         for (int i = 0; i < 4; i++)
         {
             // Create slots
@@ -23,7 +26,7 @@ public class PlayerJoin : MonoBehaviour
             slots[i] = slot.GetComponent<PlayerSlot>();
         }
 
-        currentSlot = 0;
+        nextSlotNumber = 0;
         UpdateHoverPosition();
     }
 
@@ -39,7 +42,7 @@ public class PlayerJoin : MonoBehaviour
                 joined[i] = true;
                 AssignNextSlot(index);
             }
-            else if (state.Buttons.Start == ButtonState.Pressed && currentSlot > 1)
+            else if (state.Buttons.Start == ButtonState.Pressed && nextSlotNumber > 1)
             {
                 StartGame();
                 break;
@@ -49,22 +52,24 @@ public class PlayerJoin : MonoBehaviour
 
     private void AssignNextSlot(PlayerIndex index)
     {
-        slots[currentSlot].Init(index);
-        currentSlot++;
+        slots[nextSlotNumber].Init(index);
+        nextSlotNumber++;
         UpdateHoverPosition();
 
         //TODO: 4 players auto start??
+        if (nextSlotNumber == 2)
+            startPrompt.SetActive(true);
     }
 
     private void UpdateHoverPosition()
     {
-        emptySlotHover.anchorMin = emptySlotHover.anchorMax = slots[currentSlot].GetComponent<RectTransform>().anchorMin;
+        emptySlotHover.anchorMin = emptySlotHover.anchorMax = slots[nextSlotNumber].GetComponent<RectTransform>().anchorMin;
     }
 
     private void StartGame()
     {
         Debug.Log("Start Game");
-        Persistent.SetPlayerSlots(slots.Take(currentSlot).Select(s => s.GetInfo()).ToList());
+        Persistent.SetPlayerSlots(slots.Take(nextSlotNumber).Select(s => s.GetInfo()).ToList());
         SceneControl.ToLevelSelect();
     }
 }
