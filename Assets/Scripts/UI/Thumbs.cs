@@ -9,6 +9,7 @@ using XInputDotNetPure;
 public class Thumbs : MonoBehaviour
 {
     [SerializeField] private GameObject thumbPrefab;
+    [SerializeField] private GameObject preview;
 
     private float spacing = 141 + 30;
     private List<GameObject> thumbs = new List<GameObject>();
@@ -25,6 +26,7 @@ public class Thumbs : MonoBehaviour
         prevState = state = GamePad.GetState(PlayerIndex.One);
         rectTransform = GetComponent<RectTransform>();
         StartCoroutine(LoadAllThumbs());
+        preview.SetActive(true);
     }
 
     private IEnumerator LoadAllThumbs()
