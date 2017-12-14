@@ -125,7 +125,7 @@ public class Player : MonoBehaviour
             Physics.IgnoreCollision(col, bullet.GetComponent<Collider>());
             bullet.SetActive(true);
             StartCoroutine(Reload());
-            Destroy(bullet, 1f);
+            Destroy(bullet, 2f);
         }
     }
 
