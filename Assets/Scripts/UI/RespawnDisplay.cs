@@ -20,7 +20,7 @@ public class RespawnDisplay : MonoBehaviour
 
         while (percent < 1)
         {
-            float alpha = (Mathf.Sin(2 * Mathf.PI * percent * 4) + 1) / 2;
+            float alpha = (Mathf.Sin(2 * Mathf.PI * percent * percent * 8) + 1) / 2;
             meshRenderer.material.color = new Color(color.r, color.g, color.b, alpha);
             percent += Time.deltaTime / time;
             yield return null;

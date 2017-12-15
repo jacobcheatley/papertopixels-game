@@ -23,6 +23,9 @@ public class Player : MonoBehaviour
     [Header("Other")]
     [SerializeField] private int health = 4;
 
+    // Public
+    public GameStats Stats;
+
     // Constants
     private const float deadMag = 0.1f;
     private const float triggerThreshold = 0.5f;
@@ -47,6 +50,7 @@ public class Player : MonoBehaviour
         playerIndex = slotInfo.Index;
         appearance.SetColor(slotInfo.Color);
         bulletObject.GetComponent<Bullet>().Init(slotInfo);
+        Stats = Persistent.PlayerStats[playerIndex];
     }
 
     void Start()
@@ -71,6 +75,8 @@ public class Player : MonoBehaviour
         Movement();
         Shooting();
         Effects();
+
+        DebugInteraction();
     }
 
     void OnCollisionEnter(Collision other)
@@ -82,23 +88,29 @@ public class Player : MonoBehaviour
             if (dashing)
             {
                 Player player = g.GetComponent<Player>();
-                Debug.Log($"{playerIndex} hit {player.GetIndex()} with dash");
-//                g.GetComponent<Rigidbody>().AddForce(rb.velocity, ForceMode.Impulse);
                 player.Damage(playerIndex, 1);
             }
 
         }
     }
 
-
     public void Damage(PlayerIndex source, int damage)
     {
         health -= damage;
         playerUI.SetHealth(health, maxHealth);
-        // TODO: actual death
+
+        Debug.Log($"{source} -> {playerIndex}");
+
+        GameStats sourceStats = Persistent.PlayerStats[source];
+        Stats.DamageTaken += damage;
+        sourceStats.DamageDealt += damage;
 
         if (health == 0)
+        {
             Respawn();
+            Stats.Deaths++;
+            sourceStats.Kills++;
+        }
     }
 
     private void Movement()
@@ -134,6 +146,15 @@ public class Player : MonoBehaviour
         float left = dashing ? 0.5f : 0;
         float right = (shooting ? 0.1f : 0) + (canShoot ? 0 : 0.1f) + (dashing ? 0.1f : 0);
         GamePad.SetVibration(playerIndex, left, right);
+    }
+
+    private void DebugInteraction()
+    {
+        if (state.Buttons.Y == ButtonState.Pressed && prevState.Buttons.Y == ButtonState.Released)
+        {
+            Debug.Log($"Stats for {playerIndex} ({GetColor()})\n" +
+                      $"K/D: {Stats.Kills} / {Stats.Deaths} | DMG: {Stats.DamageDealt} / {Stats.DamageTaken}");
+        }
     }
 
     private void Shoot(Vector3 direction)
@@ -186,11 +207,6 @@ public class Player : MonoBehaviour
         dashing = false;
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
-    }
-
-    public PlayerIndex GetIndex()
-    {
-        return playerIndex;
     }
 
     public Color GetColor()

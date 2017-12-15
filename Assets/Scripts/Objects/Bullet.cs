@@ -12,13 +12,13 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float explosionForce;
     [SerializeField] private float explosionRadius;
 
-    [HideInInspector] public PlayerIndex playerIndex;
-    [HideInInspector] public Color color;
-    private Collider col;
+    [HideInInspector] [SerializeField] private Color color;
+    [HideInInspector] [SerializeField] private PlayerIndex index;
 
     public void Init(SlotInfo slotInfo)
     {
-        playerIndex = slotInfo.Index;
+        index = slotInfo.Index;
+        Debug.Log(index);
 
         // Appearance
         color = slotInfo.Color;
@@ -29,11 +29,6 @@ public class Bullet : MonoBehaviour
         // Trail renderer color
         trailRenderer.startColor = color;
         trailRenderer.endColor = new Color(color.r, color.g, color.b, 0);
-    }
-
-    void Start()
-    {
-        col = GetComponent<Collider>();
     }
 
     void OnCollisionEnter(Collision other)
@@ -47,9 +42,8 @@ public class Bullet : MonoBehaviour
         else if (g.tag == "Player")
         {
             Player player = g.GetComponent<Player>();
-            Debug.Log($"{playerIndex} hit {player.GetIndex()} directly");
             Explode();
-            player.Damage(playerIndex, 1);
+            player.Damage(index, 1);
         }
         else if (g.tag == "Wall")
         {
@@ -78,12 +72,7 @@ public class Bullet : MonoBehaviour
             // TODO: Check there's line of sight?
             Rigidbody rb = hit.GetComponent<Rigidbody>();
             if (rb != null)
-            {
                 rb.AddExplosionForce(explosionForce, pos, explosionRadius, 0.01f, ForceMode.Impulse);
-                Player player = hit.GetComponent<Player>();
-                if (player != null)
-                    Debug.Log($"{playerIndex} hit {player.GetIndex()} INdirectly");
-            }
         }
 
         Destroy(gameObject);
