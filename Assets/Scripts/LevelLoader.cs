@@ -120,8 +120,6 @@ public class LevelLoader : MonoBehaviour
     {
         foreach (Line line in map.Lines.Where(l => l.Color == MapColor.Black))
         {
-            // TODO: Exact implementation details
-            // Gotta make some thick walls (probably like 0.2 units thick)
             GameObject wall = new GameObject();
             wall.transform.parent = levelContainer;
             for (int i = 0; i < line.Points.Length - 1; i++)
@@ -155,4 +153,9 @@ public class LevelLoader : MonoBehaviour
         }
     }
     #endregion
+
+    public static Transform LevelContainer()
+    {
+        return instance.levelContainer;
+    }
 }

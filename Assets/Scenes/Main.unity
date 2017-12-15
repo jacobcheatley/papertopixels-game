@@ -215,8 +215,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2005490011}
   - component: {fileID: 2005490012}
+  - component: {fileID: 2005490013}
   m_Layer: 0
-  m_Name: Level Loader
+  m_Name: Control
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -256,3 +257,17 @@ MonoBehaviour:
   wallThickness: 0.2
   lineMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   groundMaterial: {fileID: 2100000, guid: a5ef5b95826da584f8b6161da7031c35, type: 2}
+--- !u!114 &2005490013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2005490010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fdcadfb0131b24d91ad0a2800717ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  respawnObject: {fileID: 1144291152435208, guid: de688944e36b7084d8e14d8245278b00,
+    type: 2}
+  respawnTime: 2

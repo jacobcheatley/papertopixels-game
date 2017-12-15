@@ -49,6 +49,7 @@ public class Bullet : MonoBehaviour
             Player player = g.GetComponent<Player>();
             Debug.Log($"{playerIndex} hit {player.GetIndex()} directly");
             Explode();
+            player.Damage(playerIndex, 1);
         }
         else if (g.tag == "Wall")
         {

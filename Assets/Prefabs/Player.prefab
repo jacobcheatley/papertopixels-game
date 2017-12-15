@@ -647,6 +647,8 @@ MonoBehaviour:
   dashDuration: 0.2
   shootCooldown: 0.5
   bulletSpeed: 45
+  ammo: 6
+  health: 4
 --- !u!135 &135924009480594820
 SphereCollider:
   m_ObjectHideFlags: 1

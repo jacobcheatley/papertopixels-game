@@ -6,8 +6,12 @@ public class PlayerAppearance : MonoBehaviour
     [SerializeField] private TrailRenderer trailRenderer;
     [SerializeField] private Light spotlight;
 
+    private Color color;
+
     public void SetColor(Color color)
     {
+        this.color = color;
+
         // Body renderer material color
         Material newMaterial = new Material(bodyRenderer.material);
         newMaterial.color = color;
@@ -18,5 +22,10 @@ public class PlayerAppearance : MonoBehaviour
         trailRenderer.endColor = new Color(color.r, color.g, color.b, 0);
 
         spotlight.color = color;
+    }
+
+    public Color GetColor()
+    {
+        return color;
     }
 }

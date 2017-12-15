@@ -19,6 +19,9 @@ public class Player : MonoBehaviour
     [Header("Shooting")]
     [SerializeField] private float shootCooldown = 0.2f;
     [SerializeField] private float bulletSpeed = 40f;
+    [SerializeField] private int ammo = 6;
+    [Header("Other")]
+    [SerializeField] private int health = 4;
 
     // Constants
     private const float deadMag = 0.1f;
@@ -36,6 +39,8 @@ public class Player : MonoBehaviour
     private Vector3 currentLook = Vector3.forward;
     private bool shooting;
     private PlayerUI playerUI;
+    private int maxAmmo;
+    private int maxHealth;
 
     public void Init(SlotInfo slotInfo)
     {
@@ -52,13 +57,17 @@ public class Player : MonoBehaviour
 
         playerUI = Instantiate(followUIPrefab).GetComponent<PlayerUI>();
         playerUI.Init(transform);
+        playerUI.SetAmmo(ammo);
+
+        maxAmmo = ammo;
+        maxHealth = health;
     }
 
     void Update()
     {
         prevState = state;
         state = GamePad.GetState(playerIndex);
-
+        
         Movement();
         Shooting();
         Effects();
@@ -75,9 +84,21 @@ public class Player : MonoBehaviour
                 Player player = g.GetComponent<Player>();
                 Debug.Log($"{playerIndex} hit {player.GetIndex()} with dash");
 //                g.GetComponent<Rigidbody>().AddForce(rb.velocity, ForceMode.Impulse);
+                player.Damage(playerIndex, 1);
             }
 
         }
+    }
+
+
+    public void Damage(PlayerIndex source, int damage)
+    {
+        health -= damage;
+        playerUI.SetHealth(health, maxHealth);
+        // TODO: actual death
+
+        if (health == 0)
+            Respawn();
     }
 
     private void Movement()
@@ -117,7 +138,7 @@ public class Player : MonoBehaviour
 
     private void Shoot(Vector3 direction)
     {
-        if (canShoot)
+        if (canShoot && ammo > 0)
         {
             // Bullet shot
             GameObject bullet = Instantiate(bulletObject, bulletOrigin.position, Quaternion.LookRotation(direction));
@@ -126,7 +147,26 @@ public class Player : MonoBehaviour
             bullet.SetActive(true);
             StartCoroutine(Reload());
             Destroy(bullet, 2f);
+
+            ammo--;
+            playerUI.SetAmmo(ammo);
         }
+    }
+
+    private void Respawn()
+    {
+        // TODO: Explode myself
+        Refresh();
+        GameControl.Respawn(this);
+    }
+
+    private void Refresh()
+    {
+        health = maxHealth;
+        playerUI.SetHealth(health, maxHealth);
+        ammo = maxAmmo;
+        playerUI.SetAmmo(ammo);
+        rb.velocity = Vector3.zero;
     }
 
     private IEnumerator Reload()
@@ -151,5 +191,10 @@ public class Player : MonoBehaviour
     public PlayerIndex GetIndex()
     {
         return playerIndex;
+    }
+
+    public Color GetColor()
+    {
+        return appearance.GetColor();
     }
 }
