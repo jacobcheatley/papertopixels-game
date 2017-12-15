@@ -12,6 +12,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float explosionForce;
     [SerializeField] private float explosionRadius;
 
+    // Serializing Fields because wew Unity is annoying
     [HideInInspector] [SerializeField] private Color color;
     [HideInInspector] [SerializeField] private PlayerIndex index;
 
