@@ -114,4 +114,9 @@ public class Line
     {
         return $"{(Closed ? "Closed" : "Open")} {Color} {string.Join(",", Points.Select(p => $"({p.x:##.00} {p.z:##.00})"))}";
     }
+
+    public Vector3 Average()
+    {
+        return Points.Aggregate(Vector3.zero, (current, vec) => current + vec) / Points.Length;
+    }
 }

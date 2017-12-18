@@ -10,6 +10,7 @@ public class LevelLoader : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject wallCorner;
     [SerializeField] private GameObject wallSegment;
+    [SerializeField] private GameObject ammoPrefab;
 
     [Header("Function")]
     [SerializeField] private Transform levelContainer;
@@ -71,23 +72,16 @@ public class LevelLoader : MonoBehaviour
     private void GenerateLevel()
     {
         Debug.Log(map);
-        GenerateGround();
+        PlaceGround();
 //        GenerateMarkers();
         GenerateWalls();
+        PlaceAmmo();
+
         PlacePlayers();
     }
 
     #region Generation
-    private void PlacePlayers()
-    {
-        foreach (SlotInfo playerSlot in Persistent.PlayerSlots)
-        {
-            GameObject player = Instantiate(playerPrefab, Vector3.up, Quaternion.identity, levelContainer);
-            player.GetComponent<Player>().Init(playerSlot);
-        }
-    }
-
-    private void GenerateGround()
+    private void PlaceGround()
     {
         GameObject ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
         ground.transform.parent = levelContainer;
@@ -150,6 +144,27 @@ public class LevelLoader : MonoBehaviour
                 GameObject section = Instantiate(wallSegment, (point + next) / 2f + Vector3.up, Quaternion.LookRotation(point - next), wall.transform);
                 section.transform.localScale = new Vector3(wallThickness, 2, Vector3.Distance(point, next));
             }
+        }
+    }
+
+    private void PlaceAmmo()
+    {
+        foreach (Line line in map.Lines.Where(l => l.Color == MapColor.Blue))
+        {
+            Vector3 avg = line.Average();
+            float radius = line.Points.Average(p => Vector3.Distance(p, avg));
+
+            GameObject ammo = Instantiate(ammoPrefab, avg, Quaternion.identity, levelContainer);
+            ammo.transform.localScale = new Vector3(radius * 2, 1, radius * 2);
+        }
+    }
+
+    private void PlacePlayers()
+    {
+        foreach (SlotInfo playerSlot in Persistent.PlayerSlots)
+        {
+            GameObject player = Instantiate(playerPrefab, Vector3.up, Quaternion.identity, levelContainer);
+            player.GetComponent<Player>().Init(playerSlot);
         }
     }
     #endregion

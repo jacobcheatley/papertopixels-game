@@ -186,6 +186,10 @@ public class Player : MonoBehaviour
         health = maxHealth;
         playerUI.SetHealth(health, maxHealth);
         ammo = maxAmmo;
+        canDash = true;
+        dashing = false;
+        canShoot = true;
+        GamePad.SetVibration(playerIndex, 0, 0);
         playerUI.SetAmmo(ammo);
         rb.velocity = Vector3.zero;
     }
@@ -212,5 +216,11 @@ public class Player : MonoBehaviour
     public Color GetColor()
     {
         return appearance.GetColor();
+    }
+
+    public void RefillAmmo()
+    {
+        ammo = maxAmmo;
+        playerUI.SetAmmo(ammo);
     }
 }
