@@ -11,6 +11,7 @@ public class LevelLoader : MonoBehaviour
     [SerializeField] private GameObject wallCorner;
     [SerializeField] private GameObject wallSegment;
     [SerializeField] private GameObject ammoPrefab;
+    [SerializeField] private GameObject groundPrefab;
 
     [Header("Function")]
     [SerializeField] private Transform levelContainer;
@@ -19,7 +20,6 @@ public class LevelLoader : MonoBehaviour
 
     [Header("Visual")]
     [SerializeField] private Material lineMaterial;
-    [SerializeField] private Material groundMaterial;
 
     private bool loading;
     private Map map;
@@ -83,11 +83,8 @@ public class LevelLoader : MonoBehaviour
     #region Generation
     private void PlaceGround()
     {
-        GameObject ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
-        ground.transform.parent = levelContainer;
-        ground.transform.localScale = new Vector3(map.HScale / 10, 1, map.VScale / 10);
-        ground.GetComponent<MeshRenderer>().material = groundMaterial;
-        ground.name = "Ground";
+        Instantiate(groundPrefab, levelContainer);
+        // TODO: ATM everything is hard coded to be 2*sqrt(2) ratio
     }
 
     private void GenerateMarkers()
