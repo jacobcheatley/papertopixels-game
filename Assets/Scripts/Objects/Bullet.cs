@@ -71,9 +71,14 @@ public class Bullet : MonoBehaviour
         foreach (Collider hit in colliders)
         {
             // TODO: Check there's line of sight?
-            Rigidbody rb = hit.GetComponent<Rigidbody>();
-            if (rb != null)
-                rb.AddExplosionForce(explosionForce, pos, explosionRadius, 0.01f, ForceMode.Impulse);
+            if (hit.CompareTag("Bullet") && hit.gameObject != gameObject)
+                hit.GetComponent<Bullet>().Explode();
+            else
+            {
+                Rigidbody rb = hit.GetComponent<Rigidbody>();
+                if (rb != null)
+                    rb.AddExplosionForce(explosionForce, pos, explosionRadius, 0.01f, ForceMode.Impulse);
+            }
         }
 
         Destroy(gameObject);
