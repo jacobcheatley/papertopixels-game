@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4326437887114938}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 33699242235473648}
   - component: {fileID: 65148236039389158}
   - component: {fileID: 23921901094224848}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Border Top
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4533379145966084}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ GameObject:
   - component: {fileID: 33578953362108624}
   - component: {fileID: 65837261502764124}
   - component: {fileID: 23679882070169144}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Border Right
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 33925564507763068}
   - component: {fileID: 65109288025916854}
   - component: {fileID: 23119480821393438}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Border Bottom
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4099133339034454}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Borders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 33291539161069660}
   - component: {fileID: 65589982038224694}
   - component: {fileID: 23036167121718316}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Border Left
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4177932941816284}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4741151238036794}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}

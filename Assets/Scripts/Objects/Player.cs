@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject bulletObject;
     [SerializeField] private PlayerAppearance appearance;
     [SerializeField] private GameObject followUIPrefab;
+    [SerializeField] private LineRenderer aimLine;
     [Header("Control")]
     [SerializeField] private float accelFactor = 8.0f;
     [Header("Dash")]
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int ammo = 6;
     [Header("Other")]
     [SerializeField] private int health = 4;
+    [SerializeField] private LayerMask aimMask;
 
     // Public
     public GameStats Stats;
@@ -29,6 +31,7 @@ public class Player : MonoBehaviour
     // Constants
     private const float deadMag = 0.1f;
     private const float triggerThreshold = 0.5f;
+    private const float maxAimDistance = 7f;
 
     // Private Variables
     private PlayerIndex playerIndex;
@@ -143,9 +146,20 @@ public class Player : MonoBehaviour
 
     private void Effects()
     {
+        // Vibration
         float left = dashing ? 0.5f : 0;
         float right = (shooting ? 0.1f : 0) + (canShoot ? 0 : 0.1f) + (dashing ? 0.1f : 0);
         GamePad.SetVibration(playerIndex, left, right);
+
+        // Aiming Line
+        Vector3 start = aimLine.gameObject.transform.position;
+        aimLine.SetPosition(0, start);
+        RaycastHit info;
+        bool hit = Physics.Raycast(new Ray(start, currentLook), out info, maxAimDistance, aimMask);
+        if (hit)
+            aimLine.SetPosition(1, info.point);
+        else
+            aimLine.SetPosition(1, start + currentLook * maxAimDistance);
     }
 
     private void DebugInteraction()
