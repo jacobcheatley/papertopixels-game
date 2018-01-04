@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameControl : MonoBehaviour
@@ -7,6 +8,7 @@ public class GameControl : MonoBehaviour
     [SerializeField] private float respawnTime;
 
     private static GameControl instance;
+    private List<Vector3> locations;
 
     void Start()
     {

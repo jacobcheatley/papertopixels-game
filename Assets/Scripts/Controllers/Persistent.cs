@@ -6,6 +6,7 @@ public class Persistent : MonoBehaviour
 {
     public static List<SlotInfo> PlayerSlots;
     public static Dictionary<PlayerIndex, GameStats> PlayerStats = new Dictionary<PlayerIndex, GameStats>();
+    public static List<GameObject> PlayerObjects = new List<GameObject>();
 
     public static void SetPlayerSlots(List<SlotInfo> slotsJoining)
     {

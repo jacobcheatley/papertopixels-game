@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -17,12 +18,15 @@ public class LevelLoader : MonoBehaviour
     [SerializeField] private Transform levelContainer;
     [SerializeField] private float allScale = 2;
     [SerializeField] private float wallThickness = 0.2f;
+    [SerializeField] private float spawnResolution = 1f;
+    [SerializeField] private LayerMask noSpawnMask;
 
     [Header("Visual")]
     [SerializeField] private Material lineMaterial;
 
     private bool loading;
     private Map map;
+    private List<Vector3> validSpawns;
     private static LevelLoader instance;
 
     void Start()
@@ -76,6 +80,7 @@ public class LevelLoader : MonoBehaviour
 //        GenerateMarkers();
         GenerateWalls();
         PlaceAmmo();
+        DetermineSpawns();
 
         PlacePlayers();
     }
@@ -156,12 +161,60 @@ public class LevelLoader : MonoBehaviour
         }
     }
 
+    private void DetermineSpawns()
+    {
+        float xDist = map.HScale / 2;
+        float zDist = map.VScale / 2;
+
+        validSpawns = new List<Vector3>();
+
+        for (float zz = -zDist; zz <= zDist; zz += spawnResolution)
+        {
+            for (float xx = -xDist; xx <= xDist; xx += spawnResolution)
+            {
+                Vector3 location = new Vector3(xx, 1, zz);
+                Collider[] walls = Physics.OverlapSphere(location, spawnResolution * 1.2f, noSpawnMask);
+                if (walls.Length == 0)
+                    validSpawns.Add(location);
+            }
+        }
+    }
+
     private void PlacePlayers()
     {
+        // Vectors for distance comparison
+        Vector3[] comparisons = {
+            new Vector3(-map.HScale / 2, 0, map.VScale / 2), // TOP LEFT
+            new Vector3(map.HScale / 2, 0, -map.VScale / 2), // BOTTOM RIGHT
+            new Vector3(-map.HScale / 2, 0, -map.VScale / 2), // BOTTOM LEFT
+            new Vector3(map.HScale / 2, 0, map.VScale / 2) // TOP RIGHT
+        };
+
+        for (int p = 0; p < Persistent.PlayerSlots.Count; p++)
+        {
+            float bestDistance = 100;
+            int bestIndex = 0;
+
+            for (var i = 0; i < validSpawns.Count; i++)
+            {
+                Vector3 spawn = validSpawns[i];
+
+                float distance = Vector3.Distance(comparisons[p], spawn);
+                if (distance < bestDistance)
+                {
+                    bestDistance = distance;
+                    bestIndex = i;
+                }
+            }
+
+            GameObject player = Instantiate(playerPrefab, validSpawns[bestIndex], Quaternion.identity, levelContainer);
+            player.GetComponent<Player>().Init(Persistent.PlayerSlots[p]);
+            Persistent.PlayerObjects.Add(player);
+        }
+
         foreach (SlotInfo playerSlot in Persistent.PlayerSlots)
         {
-            GameObject player = Instantiate(playerPrefab, Vector3.up, Quaternion.identity, levelContainer);
-            player.GetComponent<Player>().Init(playerSlot);
+            
         }
     }
     #endregion
