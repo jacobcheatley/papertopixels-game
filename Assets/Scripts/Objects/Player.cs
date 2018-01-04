@@ -29,8 +29,8 @@ public class Player : MonoBehaviour
     public GameStats Stats;
 
     // Constants
-    private const float deadMag = 0.1f;
-    private const float triggerThreshold = 0.5f;
+    private const float deadMag = 0.01f;
+    private const float triggerThreshold = 0.35f;
     private const float maxAimDistance = 7f;
 
     // Private Variables
@@ -68,6 +68,9 @@ public class Player : MonoBehaviour
 
         maxAmmo = ammo;
         maxHealth = health;
+
+        transform.rotation = Quaternion.LookRotation(-transform.position);
+        currentLook = -transform.position.normalized;
     }
 
     void Update()

@@ -75,9 +75,7 @@ public class LevelLoader : MonoBehaviour
 
     private void GenerateLevel()
     {
-        Debug.Log(map);
         PlaceGround();
-//        GenerateMarkers();
         GenerateWalls();
         PlaceAmmo();
         DetermineSpawns();
@@ -222,5 +220,10 @@ public class LevelLoader : MonoBehaviour
     public static Transform LevelContainer()
     {
         return instance.levelContainer;
+    }
+
+    public static List<Vector3> ValidSpawns()
+    {
+        return instance.validSpawns;
     }
 }

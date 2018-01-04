@@ -19,7 +19,6 @@ public class Bullet : MonoBehaviour
     public void Init(SlotInfo slotInfo)
     {
         index = slotInfo.Index;
-        Debug.Log(index);
 
         // Appearance
         color = slotInfo.Color;
