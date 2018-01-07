@@ -258,6 +258,10 @@ MonoBehaviour:
   levelContainer: {fileID: 208206549}
   allScale: 20
   wallThickness: 0.2
+  spawnResolution: 1
+  noSpawnMask:
+    serializedVersion: 2
+    m_Bits: 512
   lineMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!114 &2005490013
 MonoBehaviour:
