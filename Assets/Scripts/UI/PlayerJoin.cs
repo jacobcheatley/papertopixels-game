@@ -44,6 +44,7 @@ public class PlayerJoin : MonoBehaviour
             }
             else if (state.Buttons.Start == ButtonState.Pressed && nextSlotNumber > 1)
             {
+                Persistent.LobbyController = index;
                 StartGame();
                 break;
             }

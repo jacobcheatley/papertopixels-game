@@ -73,7 +73,7 @@ public class Thumbs : MonoBehaviour
             prevState = state;
             try
             {
-                state = GamePad.GetState(Persistent.PlayerSlots[0].Index);
+                state = GamePad.GetState(Persistent.LobbyController);
             }
             catch (Exception)
             {

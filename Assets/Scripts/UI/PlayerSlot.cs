@@ -24,23 +24,7 @@ public class PlayerSlot : MonoBehaviour
 
         colorImage = GetComponent<Image>();
 
-        switch (index)
-        {
-            case PlayerIndex.One:
-                playerIndicator.transform.rotation = Quaternion.Euler(0, 0, 0);
-                break;
-            case PlayerIndex.Two:
-                playerIndicator.transform.rotation = Quaternion.Euler(0, 0, 270);
-                break;
-            case PlayerIndex.Three:
-                playerIndicator.transform.rotation = Quaternion.Euler(0, 0, 90);
-                break;
-            case PlayerIndex.Four:
-                playerIndicator.transform.rotation = Quaternion.Euler(0, 0, 180);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(index), index, null);
-        }
+        playerIndicator.transform.rotation = UIHelper.PlayerIndicatorRotation(index);
 
         // Set up colors
         slotIndex = ignoreIndices.Count;

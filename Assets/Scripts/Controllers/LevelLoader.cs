@@ -24,6 +24,9 @@ public class LevelLoader : MonoBehaviour
     [Header("Visual")]
     [SerializeField] private Material lineMaterial;
 
+    [Header("UI")]
+    [SerializeField] private InGameUI gameUI;
+
     private bool loading;
     private Map map;
     private List<Vector3> validSpawns;
@@ -81,6 +84,8 @@ public class LevelLoader : MonoBehaviour
         DetermineSpawns();
 
         PlacePlayers();
+
+        StartGame();
     }
 
     #region Generation
@@ -209,13 +214,13 @@ public class LevelLoader : MonoBehaviour
             player.GetComponent<Player>().Init(Persistent.PlayerSlots[p]);
             Persistent.PlayerObjects.Add(player);
         }
-
-        foreach (SlotInfo playerSlot in Persistent.PlayerSlots)
-        {
-            
-        }
     }
     #endregion
+
+    private void StartGame()
+    {
+        gameUI.Init();
+    }
 
     public static Transform LevelContainer()
     {
