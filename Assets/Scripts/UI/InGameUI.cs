@@ -4,6 +4,7 @@ public class InGameUI : MonoBehaviour
 {
     [SerializeField] private RectTransform statCardContainer;
     [SerializeField] private GameObject statCardPrefab;
+    [SerializeField] private TimerUI timerUi;
 
     public void Init()
     {
@@ -13,5 +14,6 @@ public class InGameUI : MonoBehaviour
             Instantiate(statCardPrefab, statCardContainer).GetComponent<StatCard>().Init(slotInfo, count);
             count++;
         }
+        timerUi.Init();
     }
 }
