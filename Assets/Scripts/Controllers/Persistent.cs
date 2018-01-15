@@ -44,4 +44,7 @@ public class GameStats
     public int DamageTaken = 0;
     public int Kills = 0;
     public int Deaths = 0;
+    public int ShotsFired = 0;
+    public int ShotsHit = 0;
+    public int Dashes = 0;
 }

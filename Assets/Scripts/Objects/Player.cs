@@ -200,6 +200,7 @@ public class Player : MonoBehaviour
 
             ammo--;
             playerUI.SetAmmo(ammo);
+            Stats.ShotsFired++;
         }
     }
 
@@ -234,6 +235,7 @@ public class Player : MonoBehaviour
     {
         dashing = true;
         canDash = false;
+        Stats.Dashes++;
         rb.velocity = dashSpeed * direction;
         playerUI.StartCooldown(dashCooldown + dashDuration);
         yield return new WaitForSeconds(dashDuration);

@@ -17,6 +17,8 @@ public class EndStatCard : MonoBehaviour
     [SerializeField] private Text killsText;
     [SerializeField] private Text deathsText;
     [SerializeField] private Text damageText;
+    [SerializeField] private Text accuracyText;
+    [SerializeField] private Text dashesText;
 
     private string[] placingStrings = {"1st", "2nd", "3rd", "4th"};
 
@@ -30,6 +32,8 @@ public class EndStatCard : MonoBehaviour
         killsText.text = stats.Kills.ToString();
         deathsText.text = stats.Deaths.ToString();
         damageText.text = $"{stats.DamageDealt} - {stats.DamageTaken}";
+        accuracyText.text = $"{stats.ShotsHit} / {stats.ShotsFired}";
+        dashesText.text = stats.Dashes.ToString();
 
         // Set up image components
         backgroundImage.color = slotInfo.Color;

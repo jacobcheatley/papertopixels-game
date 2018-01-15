@@ -43,6 +43,7 @@ public class Bullet : MonoBehaviour
         }
         else if (g.tag == "Player")
         {
+            Persistent.PlayerStats[index].ShotsHit++;
             Player player = g.GetComponent<Player>();
             Explode();
             player.Damage(index, 1);

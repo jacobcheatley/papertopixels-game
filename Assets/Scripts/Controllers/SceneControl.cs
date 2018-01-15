@@ -31,6 +31,7 @@ public class SceneControl : MonoBehaviour
 
     public static void ToEndGame()
     {
+        Controller.EndAllVibration();
         instance.StartCoroutine(instance.EndGame_());
     }
 

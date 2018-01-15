@@ -15,4 +15,10 @@ public static class Controller
                state.ThumbSticks.Left.X > threshold && prevState.ThumbSticks.Left.X < threshold ||
                state.Buttons.RightShoulder == ButtonState.Pressed && prevState.Buttons.RightShoulder == ButtonState.Released;
     }
+
+    public static void EndAllVibration()
+    {
+        for (PlayerIndex i = 0; i <= PlayerIndex.Four; i++)
+            GamePad.SetVibration(i, 0, 0);
+    }
 }

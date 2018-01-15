@@ -8,6 +8,7 @@ public class EndGameUI : MonoBehaviour
     [SerializeField] private GameObject statCardPrefab;
 
     private static EndGameUI instance;
+    private const int spacing = 320;
 
     void Start()
     {
@@ -19,10 +20,10 @@ public class EndGameUI : MonoBehaviour
         int count = 0;
         foreach (SlotInfo slotInfo in Persistent.PlayerSlots)
         {
-            Instantiate(instance.statCardPrefab, instance.statCardContainer).GetComponent<EndStatCard>().Init(slotInfo, new Vector2((count - 1) * 300, 0), count + 1);
+            Instantiate(instance.statCardPrefab, instance.statCardContainer).GetComponent<EndStatCard>().Init(slotInfo, new Vector2((count - 1) * spacing, 0), count + 1);
             count++;
         }
-        instance.statCardContainer.sizeDelta = new Vector2((count - 1) * 150, 100);
+        instance.statCardContainer.sizeDelta = new Vector2((count - 1) * (spacing / 2f), 100);
     }
 
     void Update()
