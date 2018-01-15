@@ -86,13 +86,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerIndicator: {fileID: 1216851504426554}
   colors:
-  - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 0, g: 1, b: 0, a: 1}
-  - {r: 0, g: 0, b: 1, a: 1}
-  - {r: 1, g: 0, b: 1, a: 1}
-  - {r: 1, g: 1, b: 0, a: 1}
   - {r: 0, g: 1, b: 1, a: 1}
-  - {r: 1, g: 0.5586207, b: 0, a: 1}
+  - {r: 1, g: 0.5568628, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 1, g: 1, b: 0, a: 1}
+  - {r: 1, g: 0, b: 1, a: 1}
+  - {r: 0, g: 0, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   colorImage: {fileID: 114078048836974052}
 --- !u!114 &114946907210145610
