@@ -16,6 +16,8 @@ public class Bullet : MonoBehaviour
     [HideInInspector] [SerializeField] private Color color;
     [HideInInspector] [SerializeField] private PlayerIndex index;
 
+    private bool exploding = false;
+
     public void Init(SlotInfo slotInfo)
     {
         index = slotInfo.Index;
@@ -53,6 +55,9 @@ public class Bullet : MonoBehaviour
 
     void Explode()
     {
+        if (exploding) return;
+        exploding = true;
+
         GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         // TODO: Smarter way of changing color?
         ParticleSystem.ColorOverLifetimeModule colorOverLifetime = explosion.GetComponent<ParticleSystem>().colorOverLifetime;
