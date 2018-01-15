@@ -6,10 +6,11 @@ public class StatCard : MonoBehaviour
     [SerializeField] private RectTransform rectTransform;
     [SerializeField] private Image background;
     [SerializeField] private Image playerIndicator;
-    [SerializeField] private Text killCounter;
+    [SerializeField] private Text kdCounter;
 
     private GameStats stats;
     private int currentKills = 0;
+    private int currentDeaths = 0;
 
     public void Init(SlotInfo slotInfo, int position)
     {
@@ -36,14 +37,16 @@ public class StatCard : MonoBehaviour
 
         stats = Persistent.PlayerStats[slotInfo.Index];
         background.color = slotInfo.Color;
-        killCounter.text = "<b>0</b>";
+        kdCounter.text = "0/0";
     }
 
     void Update()
     {
-        if (stats.Kills != currentKills)
+        if (stats.Kills != currentKills || stats.Deaths != currentDeaths)
         {
-            killCounter.text = $"<b>{stats.Kills}</b>";
+            currentKills = stats.Kills;
+            currentDeaths = stats.Deaths;
+            kdCounter.text = $"{currentKills}/{currentDeaths}";
         }
     }
 }
