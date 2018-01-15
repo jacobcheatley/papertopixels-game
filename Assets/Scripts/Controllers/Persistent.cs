@@ -27,14 +27,14 @@ public class Persistent : MonoBehaviour
 
     public static List<PlayerIndex> PlayerPlacings()
     {
-        var a = PlayerStats.ToList()
-            .OrderByDescending(p => p.Value.Kills)
-            .ThenBy(p => p.Value.Deaths)
-            .ThenByDescending(p => p.Value.DamageDealt)
-            .ThenBy(p => p.Value.DamageTaken)
+        return PlayerStats.ToList()
+            .OrderByDescending(p => p.Value.Kills) // Highest kills
+            .ThenBy(p => p.Value.Deaths) // Lowest deaths
+            .ThenByDescending(p => p.Value.DamageDealt) // Most damage dealt
+            .ThenBy(p => p.Value.DamageTaken) // Least damage taken
+            .ThenByDescending(p => (float)p.Value.ShotsHit / p.Value.ShotsFired) // Highest accuracy
             .Select(p => p.Key)
             .ToList();
-        return a;
     }
 }
 
