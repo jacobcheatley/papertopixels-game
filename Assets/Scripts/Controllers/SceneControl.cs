@@ -9,6 +9,7 @@ public class SceneControl : MonoBehaviour
     private static string mainName = "Main";
     private static string lobbyName = "Lobby";
     private static string levelName = "LevelSelect";
+    private static string endName = "EndGame";
 
     private static bool inLoad = false;
 
@@ -30,10 +31,16 @@ public class SceneControl : MonoBehaviour
         instance.StartCoroutine(instance.Game_(id));
     }
 
+    public static void ToEndGame()
+    {
+        instance.StartCoroutine(instance.EndGame_());
+    }
+
     IEnumerator Setup()
     {
         yield return SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName(mainName));
         yield return SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName(levelName));
+        yield return SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName(endName));
     }
 
     IEnumerator LevelSelect_()
@@ -48,7 +55,16 @@ public class SceneControl : MonoBehaviour
         StartCoroutine(ToLevelExclusive(mainName));
         while (inLoad)
             yield return null;
-        LevelLoader.Create(id); // TODO: Select correct ID
+        LevelLoader.Create(id);
+        InGameUI.Init();
+    }
+
+    IEnumerator EndGame_()
+    {
+        StartCoroutine(ToLevelExclusive(endName));
+        while (inLoad)
+            yield return null;
+        EndGameUI.Init();
     }
 
     IEnumerator ToLevelExclusive(string name)

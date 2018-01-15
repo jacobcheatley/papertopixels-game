@@ -84,8 +84,6 @@ public class LevelLoader : MonoBehaviour
         DetermineSpawns();
 
         PlacePlayers();
-
-        StartGame();
     }
 
     #region Generation
@@ -216,11 +214,6 @@ public class LevelLoader : MonoBehaviour
         }
     }
     #endregion
-
-    private void StartGame()
-    {
-        gameUI.Init();
-    }
 
     public static Transform LevelContainer()
     {

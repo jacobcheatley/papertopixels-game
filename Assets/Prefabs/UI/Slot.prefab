@@ -93,7 +93,6 @@ MonoBehaviour:
   - {r: 1, g: 1, b: 0, a: 1}
   - {r: 1, g: 0, b: 1, a: 1}
   - {r: 0, g: 0, b: 1, a: 1}
-  - {r: 1, g: 1, b: 1, a: 1}
   colorImage: {fileID: 114078048836974052}
 --- !u!114 &114946907210145610
 MonoBehaviour:

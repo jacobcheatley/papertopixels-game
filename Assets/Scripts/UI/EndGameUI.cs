@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 
-public class InGameUI : MonoBehaviour
+public class EndGameUI : MonoBehaviour
 {
     [SerializeField] private RectTransform statCardContainer;
     [SerializeField] private GameObject statCardPrefab;
-    [SerializeField] private TimerUI timerUi;
 
-    private static InGameUI instance;
+    private static EndGameUI instance;
 
     void Start()
     {
@@ -18,9 +17,9 @@ public class InGameUI : MonoBehaviour
         int count = 0;
         foreach (SlotInfo slotInfo in Persistent.PlayerSlots)
         {
-            Instantiate(instance.statCardPrefab, instance.statCardContainer).GetComponent<StatCard>().Init(slotInfo, count);
+            Instantiate(instance.statCardPrefab, instance.statCardContainer).GetComponent<EndStatCard>().Init(slotInfo, new Vector2((count - 1) * 300, 0));
             count++;
         }
-        instance.timerUi.Init();
+        instance.statCardContainer.sizeDelta = new Vector2((count - 1) * 300 - 150, 100);
     }
 }
