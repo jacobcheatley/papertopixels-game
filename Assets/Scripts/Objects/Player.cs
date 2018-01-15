@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
     private PlayerUI playerUI;
     private int maxAmmo;
     private int maxHealth;
+    private int damagedRecently;
 
     public void Init(SlotInfo slotInfo)
     {
@@ -117,6 +118,15 @@ public class Player : MonoBehaviour
             Stats.Deaths++;
             sourceStats.Kills++;
         }
+
+        StartCoroutine(DamagedRecently());
+    }
+
+    private IEnumerator DamagedRecently()
+    {
+        damagedRecently++;
+        yield return new WaitForSeconds(0.3f);
+        damagedRecently--;
     }
 
     private void Movement()
@@ -134,8 +144,8 @@ public class Player : MonoBehaviour
     private void Shooting()
     {
         Vector3 rightStick = new Vector3(state.ThumbSticks.Right.X, 0, state.ThumbSticks.Right.Y).normalized;
-        shooting = state.Triggers.Right >= triggerThreshold ||
-            state.Buttons.RightShoulder == ButtonState.Pressed && prevState.Buttons.RightShoulder == ButtonState.Released;
+        shooting = ammo > 0 && (state.Triggers.Right >= triggerThreshold ||
+            state.Buttons.RightShoulder == ButtonState.Pressed && prevState.Buttons.RightShoulder == ButtonState.Released);
 
         if (rightStick.sqrMagnitude >= deadMag)
         {
@@ -150,8 +160,8 @@ public class Player : MonoBehaviour
     private void Effects()
     {
         // Vibration
-        float left = dashing ? 0.5f : 0;
-        float right = (shooting ? 0.1f : 0) + (canShoot ? 0 : 0.1f) + (dashing ? 0.1f : 0);
+        float left = (dashing ? 0.4f : 0) + (damagedRecently > 0 ? 0.35f : 0);
+        float right = (shooting ? 0.2f : 0) + (canShoot ? 0 : 0.1f) + (dashing ? 0.1f : 0) + (damagedRecently > 0 ? 0.35f : 0);
         GamePad.SetVibration(playerIndex, left, right);
 
         // Aiming Line
