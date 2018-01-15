@@ -19,10 +19,10 @@ public class EndGameUI : MonoBehaviour
         int count = 0;
         foreach (SlotInfo slotInfo in Persistent.PlayerSlots)
         {
-            Instantiate(instance.statCardPrefab, instance.statCardContainer).GetComponent<EndStatCard>().Init(slotInfo, new Vector2((count - 1) * 300, 0));
+            Instantiate(instance.statCardPrefab, instance.statCardContainer).GetComponent<EndStatCard>().Init(slotInfo, new Vector2((count - 1) * 300, 0), count + 1);
             count++;
         }
-        instance.statCardContainer.sizeDelta = new Vector2((count - 1) * 300 - 150, 100);
+        instance.statCardContainer.sizeDelta = new Vector2((count - 1) * 150, 100);
     }
 
     void Update()

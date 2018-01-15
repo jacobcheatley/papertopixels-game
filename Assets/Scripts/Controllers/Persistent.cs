@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using XInputDotNetPure;
 
@@ -21,6 +23,18 @@ public class Persistent : MonoBehaviour
         PlayerSlots.Clear();
         PlayerStats.Clear();
         PlayerObjects.Clear();
+    }
+
+    public static List<PlayerIndex> PlayerPlacings()
+    {
+        var a = PlayerStats.ToList()
+            .OrderByDescending(p => p.Value.Kills)
+            .ThenBy(p => p.Value.Deaths)
+            .ThenByDescending(p => p.Value.DamageDealt)
+            .ThenBy(p => p.Value.DamageTaken)
+            .Select(p => p.Key)
+            .ToList();
+        return a;
     }
 }
 

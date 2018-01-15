@@ -118,8 +118,10 @@ public class Player : MonoBehaviour
             Stats.Deaths++;
             sourceStats.Kills++;
         }
-
-        StartCoroutine(DamagedRecently());
+        else
+        {
+            StartCoroutine(DamagedRecently());
+        }
     }
 
     private IEnumerator DamagedRecently()

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class TimerUI : MonoBehaviour
 {
-    [SerializeField] private int roundTime = 30;
+    [SerializeField] private int roundTime = 90;
     [SerializeField] private Text text;
 
     private int timeRemaining;

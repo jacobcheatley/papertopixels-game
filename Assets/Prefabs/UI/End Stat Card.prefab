@@ -345,6 +345,7 @@ MonoBehaviour:
   medalImage: {fileID: 114181921573401286}
   medalText: {fileID: 114162465216443064}
   indicatorImage: {fileID: 114553738526406344}
+  playerText: {fileID: 114733718307675018}
   killsText: {fileID: 114067751369967334}
   deathsText: {fileID: 114262131195003646}
   damageText: {fileID: 114667209982477276}
