@@ -13,12 +13,14 @@ public class PlayerSlot : MonoBehaviour
     private PlayerIndex playerIndex;
     private int colorIndex;
     private int slotIndex;
-    private static List<int> ignoreIndices = new List<int>();
+    private List<int> ignoreIndices;
     private GamePadState state;
     private GamePadState prevState;
 
-    public void Init(PlayerIndex index)
+    public void Init(PlayerIndex index, List<int> ignoreIndices)
     {
+        this.ignoreIndices = ignoreIndices;
+
         // Set up player index
         playerIndex = index;
 

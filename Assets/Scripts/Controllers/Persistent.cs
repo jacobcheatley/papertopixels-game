@@ -15,6 +15,13 @@ public class Persistent : MonoBehaviour
         foreach (SlotInfo playerSlot in PlayerSlots)
             PlayerStats.Add(playerSlot.Index, new GameStats());
     }
+
+    public static void Clear()
+    {
+        PlayerSlots.Clear();
+        PlayerStats.Clear();
+        PlayerObjects.Clear();
+    }
 }
 
 public class GameStats

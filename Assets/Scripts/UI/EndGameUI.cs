@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+using XInputDotNetPure;
 
 public class EndGameUI : MonoBehaviour
 {
@@ -21,5 +23,15 @@ public class EndGameUI : MonoBehaviour
             count++;
         }
         instance.statCardContainer.sizeDelta = new Vector2((count - 1) * 300 - 150, 100);
+    }
+
+    void Update()
+    {
+        for (PlayerIndex i = PlayerIndex.One; i <= PlayerIndex.Four; i++)
+        {
+            GamePadState state = GamePad.GetState(i);
+            if (state.Buttons.Start == ButtonState.Pressed)
+                SceneControl.Restart();
+        }
     }
 }

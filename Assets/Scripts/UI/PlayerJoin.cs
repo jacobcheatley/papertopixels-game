@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using XInputDotNetPure;
 
@@ -11,6 +12,7 @@ public class PlayerJoin : MonoBehaviour
     private PlayerSlot[] slots = new PlayerSlot[4];
     private bool[] joined = { false, false, false, false };
     private int nextSlotNumber;
+    private List<int> ignoreIndices = new List<int>();
 
     void Start()
     {
@@ -53,7 +55,7 @@ public class PlayerJoin : MonoBehaviour
 
     private void AssignNextSlot(PlayerIndex index)
     {
-        slots[nextSlotNumber].Init(index);
+        slots[nextSlotNumber].Init(index, ignoreIndices);
         nextSlotNumber++;
         UpdateHoverPosition();
 

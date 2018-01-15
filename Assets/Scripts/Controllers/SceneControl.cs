@@ -21,19 +21,22 @@ public class SceneControl : MonoBehaviour
     
     public static void ToLevelSelect()
     {
-        // Lobby should already be active scene
         instance.StartCoroutine(instance.LevelSelect_());
     }
 
     public static void ToGame(int id)
     {
-        // Level Select should already be active scene
         instance.StartCoroutine(instance.Game_(id));
     }
 
     public static void ToEndGame()
     {
         instance.StartCoroutine(instance.EndGame_());
+    }
+
+    public static void Restart()
+    {
+        instance.StartCoroutine(instance.Lobby_());
     }
 
     IEnumerator Setup()
@@ -65,6 +68,14 @@ public class SceneControl : MonoBehaviour
         while (inLoad)
             yield return null;
         EndGameUI.Init();
+    }
+
+    IEnumerator Lobby_()
+    {
+        Persistent.Clear();
+        StartCoroutine(ToLevelExclusive(lobbyName));
+        while (inLoad)
+            yield return null;
     }
 
     IEnumerator ToLevelExclusive(string name)
