@@ -8,7 +8,18 @@ public class Lava : MonoBehaviour
 
     public void Init(Vector3[] points)
     {
-        Triangulator tr = new Triangulator(points.Select(v => new Vector2(v.x, v.z)).ToArray());
+        Vector2[] points2d = points.Select(v => new Vector2(v.x, v.z)).ToArray();
+        // Ensure clockwise
+        if (!Triangulator.PolygonCW(points2d))
+        {
+            Debug.Log(points2d[0]);
+            Debug.Log("werp");
+            points2d = points2d.Reverse().ToArray();
+            points = points.Reverse().ToArray();
+            Debug.Log(points2d[0]);
+        }
+
+        Triangulator tr = new Triangulator(points2d);
         int[] indices = tr.Triangulate();
 
         Mesh mesh = new Mesh();

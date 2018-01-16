@@ -5,6 +5,22 @@ public class Triangulator
 {
     private List<Vector2> m_points = new List<Vector2>();
 
+    public static bool PolygonCW(Vector2[] poly)
+    {
+        // This method taken based on https://stackoverflow.com/a/1165943
+
+        float signedArea = 0;
+
+        for (int i = 0; i < poly.Length; i++)
+        {
+            Vector2 a = poly[i];
+            Vector2 b = poly[(i + 1) % poly.Length];
+            signedArea += (a.x * b.y - b.x * a.y);
+        }
+
+        return signedArea < 0;
+    }
+
     public Triangulator(Vector2[] points)
     {
         m_points = new List<Vector2>(points);

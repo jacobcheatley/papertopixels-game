@@ -80,6 +80,7 @@ public class LevelLoader : MonoBehaviour
 
     private void GenerateLevel()
     {
+//        GenerateMarkers();
         PlaceGround();
         GenerateWalls();
         GenerateLava();
@@ -100,28 +101,33 @@ public class LevelLoader : MonoBehaviour
     private void GenerateMarkers()
     {
         foreach (Line line in map.Lines)
-        {
-            GameObject wall = new GameObject("Marker");
-            wall.transform.parent = levelContainer;
+            MakeLineRenderer(line, line.Color.GetColor());
+    }
 
-            LineRenderer lRend = wall.AddComponent<LineRenderer>();
-            lRend.positionCount = line.Points.Length;
-            lRend.SetPositions(line.Points.Select(p => p + Vector3.up * 0.5f).ToArray());
-            lRend.startWidth = lRend.endWidth = 0.25f;
-            lRend.loop = line.Closed;
-            lRend.shadowCastingMode = ShadowCastingMode.Off;
-            lRend.receiveShadows = false;
-            lRend.material = lineMaterial;
-            lRend.startColor = line.Color.GetColor();
-            lRend.endColor = line.Color.GetColor();
-        }
+    private void MakeLineRenderer(Line line, Color color, Transform parent = null)
+    {
+        if (parent == null) parent = levelContainer;
+
+        GameObject wall = new GameObject("Line Renderer");
+        wall.transform.parent = parent;
+
+        LineRenderer lRend = wall.AddComponent<LineRenderer>();
+        lRend.positionCount = line.Points.Length;
+        lRend.SetPositions(line.Points.Select(p => p + Vector3.up * 0.5f).ToArray());
+        lRend.startWidth = lRend.endWidth = 0.25f;
+        lRend.loop = line.Closed;
+        lRend.shadowCastingMode = ShadowCastingMode.Off;
+        lRend.receiveShadows = false;
+        lRend.material = lineMaterial;
+        lRend.startColor = color;
+        lRend.endColor = color;
     }
 
     private void GenerateWalls()
     {
         foreach (Line line in map.Lines.Where(l => l.Color == MapColor.Black))
         {
-            GameObject wall = new GameObject();
+            GameObject wall = new GameObject("Wall");
             wall.transform.parent = levelContainer;
             for (int i = 0; i < line.Points.Length - 1; i++)
             {
@@ -160,6 +166,7 @@ public class LevelLoader : MonoBehaviour
         {
             Lava lava = Instantiate(lavaPrefab, levelContainer).GetComponent<Lava>();
             lava.Init(line.Points);
+            MakeLineRenderer(line, new Color(0.85f, 0.05f, 0), lava.transform);
         }
     }
 
