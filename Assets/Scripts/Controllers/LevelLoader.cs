@@ -81,10 +81,11 @@ public class LevelLoader : MonoBehaviour
     {
         PlaceGround();
         GenerateWalls();
+//        GenerateLava();
         PlaceAmmo();
         PlaceHealth();
-        DetermineSpawns();
 
+        DetermineSpawns();
         PlacePlayers();
     }
 
@@ -149,6 +150,27 @@ public class LevelLoader : MonoBehaviour
                 GameObject section = Instantiate(wallSegment, (point + next) / 2f + Vector3.up, Quaternion.LookRotation(point - next), wall.transform);
                 section.transform.localScale = new Vector3(wallThickness, 2, Vector3.Distance(point, next));
             }
+        }
+    }
+
+    private void GenerateLava()
+    {
+        foreach (Line line in map.Lines.Where(l => l.Color == MapColor.Red))
+        {
+            Triangulator tr = new Triangulator(line.Points.Select(v => new Vector2(v.x, v.z)).ToArray());
+            int[] indices = tr.Triangulate();
+
+            Mesh mesh = new Mesh();
+            mesh.vertices = line.Points;
+            mesh.triangles = indices;
+            mesh.RecalculateNormals();
+            mesh.RecalculateBounds();
+
+            GameObject test = new GameObject();
+            test.AddComponent<MeshRenderer>();
+            MeshFilter filter = test.AddComponent<MeshFilter>();
+            filter.mesh = mesh;
+            test.transform.position = Vector3.up * 0.5f;
         }
     }
 
