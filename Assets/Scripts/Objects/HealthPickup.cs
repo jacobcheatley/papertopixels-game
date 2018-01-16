@@ -1,7 +1,7 @@
-﻿class AmmoPickup : Pickup
+﻿class HealthPickup : Pickup
 {
     protected override void PickupEffect(Player player)
     {
-        player.RefillAmmo();
+        player.RefillHealth();
     }
 }

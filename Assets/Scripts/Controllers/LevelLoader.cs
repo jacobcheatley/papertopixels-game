@@ -12,6 +12,7 @@ public class LevelLoader : MonoBehaviour
     [SerializeField] private GameObject wallCorner;
     [SerializeField] private GameObject wallSegment;
     [SerializeField] private GameObject ammoPrefab;
+    [SerializeField] private GameObject healthPrefab;
     [SerializeField] private GameObject groundPrefab;
 
     [Header("Function")]
@@ -81,6 +82,7 @@ public class LevelLoader : MonoBehaviour
         PlaceGround();
         GenerateWalls();
         PlaceAmmo();
+        PlaceHealth();
         DetermineSpawns();
 
         PlacePlayers();
@@ -159,6 +161,18 @@ public class LevelLoader : MonoBehaviour
 
             GameObject ammo = Instantiate(ammoPrefab, avg, Quaternion.identity, levelContainer);
             ammo.transform.localScale = new Vector3(radius * 2, 1, radius * 2);
+        }
+    }
+
+    private void PlaceHealth()
+    {
+        foreach (Line line in map.Lines.Where(l => l.Color == MapColor.Green))
+        {
+            Vector3 avg = line.Average();
+            float radius = line.Points.Average(p => Vector3.Distance(p, avg));
+
+            GameObject health = Instantiate(healthPrefab, avg, Quaternion.identity, levelContainer);
+            health.transform.localScale = new Vector3(radius * 2, 1, radius * 2);
         }
     }
 

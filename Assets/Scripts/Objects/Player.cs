@@ -254,4 +254,10 @@ public class Player : MonoBehaviour
         ammo = maxAmmo;
         playerUI.SetAmmo(ammo);
     }
+
+    public void RefillHealth()
+    {
+        health = maxHealth;
+        playerUI.SetHealth(health, maxHealth);
+    }
 }
