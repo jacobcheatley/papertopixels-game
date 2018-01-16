@@ -14,6 +14,7 @@ public class LevelLoader : MonoBehaviour
     [SerializeField] private GameObject ammoPrefab;
     [SerializeField] private GameObject healthPrefab;
     [SerializeField] private GameObject groundPrefab;
+    [SerializeField] private GameObject lavaPrefab;
 
     [Header("Function")]
     [SerializeField] private Transform levelContainer;
@@ -81,7 +82,7 @@ public class LevelLoader : MonoBehaviour
     {
         PlaceGround();
         GenerateWalls();
-//        GenerateLava();
+        GenerateLava();
         PlaceAmmo();
         PlaceHealth();
 
@@ -157,20 +158,8 @@ public class LevelLoader : MonoBehaviour
     {
         foreach (Line line in map.Lines.Where(l => l.Color == MapColor.Red))
         {
-            Triangulator tr = new Triangulator(line.Points.Select(v => new Vector2(v.x, v.z)).ToArray());
-            int[] indices = tr.Triangulate();
-
-            Mesh mesh = new Mesh();
-            mesh.vertices = line.Points;
-            mesh.triangles = indices;
-            mesh.RecalculateNormals();
-            mesh.RecalculateBounds();
-
-            GameObject test = new GameObject();
-            test.AddComponent<MeshRenderer>();
-            MeshFilter filter = test.AddComponent<MeshFilter>();
-            filter.mesh = mesh;
-            test.transform.position = Vector3.up * 0.5f;
+            Lava lava = Instantiate(lavaPrefab, levelContainer).GetComponent<Lava>();
+            lava.Init(line.Points);
         }
     }
 
