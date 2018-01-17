@@ -51,9 +51,6 @@ public class Lava : MonoBehaviour
     private void HandleCollision(Collider other)
     {
         if (other.CompareTag("Player"))
-        {
-            Player player = other.GetComponent<Player>();
-            player.LavaHit();
-        }
+            other.gameObject.GetComponentInParent<Player>().LavaHit();
     }
 }
