@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     [Header("Other")]
     [SerializeField] private int health = 4;
     [SerializeField] private LayerMask aimMask;
+    [SerializeField] private float lavaCooldownTime = 1f;
 
     // Public
     public GameStats Stats;
@@ -40,6 +41,7 @@ public class Player : MonoBehaviour
     private bool dashing = false;
     private bool canDash = true;
     private bool canShoot = true;
+    private bool lavaDamagedRecently = false;
     private GamePadState state;
     private GamePadState prevState;
     private Vector3 currentLook = Vector3.forward;
@@ -103,25 +105,39 @@ public class Player : MonoBehaviour
 
     public void Damage(PlayerIndex source, int damage)
     {
-        health -= damage;
-        playerUI.SetHealth(health, maxHealth);
-
         Debug.Log($"{source} -> {playerIndex}");
 
         GameStats sourceStats = Persistent.PlayerStats[source];
-        Stats.DamageTaken += damage;
         sourceStats.DamageDealt += damage;
+
+        if (TakeDamage(damage))
+            sourceStats.Kills++;
+    }
+
+    public void LavaHit()
+    {
+        if (!lavaDamagedRecently)
+        {
+            if (!TakeDamage(1))
+                StartCoroutine(LavaCooldown());
+        }
+    }
+
+    private bool TakeDamage(int damage)
+    {
+        health -= damage;
+        playerUI.SetHealth(health, maxHealth);
+        Stats.DamageTaken += damage;
 
         if (health == 0)
         {
             Respawn();
             Stats.Deaths++;
-            sourceStats.Kills++;
+            return true;
         }
-        else
-        {
-            StartCoroutine(DamagedRecently());
-        }
+
+        StartCoroutine(DamagedRecently());
+        return false;
     }
 
     private IEnumerator DamagedRecently()
@@ -242,6 +258,13 @@ public class Player : MonoBehaviour
         dashing = false;
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
+    }
+
+    private IEnumerator LavaCooldown()
+    {
+        lavaDamagedRecently = true;
+        yield return new WaitForSeconds(lavaCooldownTime);
+        lavaDamagedRecently = false;
     }
 
     public Color GetColor()
