@@ -599,7 +599,7 @@ MonoBehaviour:
   spawnResolution: 1
   noSpawnMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1536
   lineMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   gameUI: {fileID: 1484240879}
 --- !u!114 &2005490013
