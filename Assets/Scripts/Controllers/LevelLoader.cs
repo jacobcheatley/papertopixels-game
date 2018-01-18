@@ -162,7 +162,7 @@ public class LevelLoader : MonoBehaviour
 
     private void GenerateLava()
     {
-        foreach (Line line in map.Lines.Where(l => l.Color == MapColor.Red))
+        foreach (Line line in map.Lines.Where(l => l.Color == MapColor.Red && l.Closed))
         {
             Lava lava = Instantiate(lavaPrefab, levelContainer).GetComponent<Lava>();
             lava.Init(line.Points);
@@ -172,7 +172,7 @@ public class LevelLoader : MonoBehaviour
 
     private void PlaceAmmo()
     {
-        foreach (Line line in map.Lines.Where(l => l.Color == MapColor.Blue))
+        foreach (Line line in map.Lines.Where(l => l.Color == MapColor.Blue && l.Closed))
         {
             Vector3 avg = line.Average();
             float radius = line.Points.Average(p => Vector3.Distance(p, avg));
@@ -184,7 +184,7 @@ public class LevelLoader : MonoBehaviour
 
     private void PlaceHealth()
     {
-        foreach (Line line in map.Lines.Where(l => l.Color == MapColor.Green))
+        foreach (Line line in map.Lines.Where(l => l.Color == MapColor.Green && l.Closed))
         {
             Vector3 avg = line.Average();
             float radius = line.Points.Average(p => Vector3.Distance(p, avg));

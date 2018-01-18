@@ -6,6 +6,7 @@ public class TimerUI : MonoBehaviour
 {
     [SerializeField] private int roundTime = 90;
     [SerializeField] private Text text;
+    [SerializeField] private AudioClip beepSound;
 
     private int timeRemaining;
 
@@ -22,6 +23,8 @@ public class TimerUI : MonoBehaviour
             text.text = timeRemaining.ToString();
             yield return new WaitForSeconds(1);
             timeRemaining--;
+            if (0 < timeRemaining && timeRemaining <= 10)
+                SoundManager.PlayClip(beepSound, 1f / timeRemaining);
         }
         SceneControl.ToEndGame();
     }
