@@ -53,6 +53,7 @@ public class SceneControl : MonoBehaviour
         StartCoroutine(ToLevelExclusive(levelName));
         while (inLoad)
             yield return null;
+        CurrentlySelecting.Init(); // TODO: Make this a general call to LevelSelectUI init or something
     }
 
     IEnumerator Game_(int id)
