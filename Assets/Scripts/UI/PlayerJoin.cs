@@ -45,7 +45,7 @@ public class PlayerJoin : MonoBehaviour
                 joined[i] = true;
                 AssignNextSlot(index);
             }
-            else if (state.Buttons.Start == ButtonState.Pressed && nextSlotNumber > 1)
+            else if (state.Buttons.Start == ButtonState.Pressed && nextSlotNumber > 1 && joined[i])
             {
                 Persistent.LobbyController = index;
                 StartGame();
