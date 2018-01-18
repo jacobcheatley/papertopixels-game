@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -56,6 +57,20 @@ public class PlayerSlot : MonoBehaviour
             NextColor();
     }
 
+    private IEnumerator VibrateLeft()
+    {
+        GamePad.SetVibration(playerIndex, 0.2f, 0);
+        yield return new WaitForSeconds(0.15f);
+        GamePad.SetVibration(playerIndex, 0, 0);
+    }
+
+    private IEnumerator VibrateRight()
+    {
+        GamePad.SetVibration(playerIndex, 0, 0.2f);
+        yield return new WaitForSeconds(0.15f);
+        GamePad.SetVibration(playerIndex, 0, 0);
+    }
+
     private void DisplayColor()
     {
         colorImage.color = colors[colorIndex];
@@ -64,6 +79,7 @@ public class PlayerSlot : MonoBehaviour
 
     public void NextColor()
     {
+        StartCoroutine(VibrateRight());
         int indexToTry = colorIndex;
 
         while (ignoreIndices.Contains(indexToTry))
@@ -77,6 +93,7 @@ public class PlayerSlot : MonoBehaviour
 
     public void PrevColor()
     {
+        StartCoroutine(VibrateLeft());
         int indexToTry = colorIndex;
 
         while (ignoreIndices.Contains(indexToTry))

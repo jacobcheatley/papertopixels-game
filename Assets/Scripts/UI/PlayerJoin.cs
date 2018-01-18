@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using XInputDotNetPure;
@@ -55,6 +56,7 @@ public class PlayerJoin : MonoBehaviour
 
     private void AssignNextSlot(PlayerIndex index)
     {
+        StartCoroutine(VibrateJoin(index));
         slots[nextSlotNumber].Init(index, ignoreIndices);
         nextSlotNumber++;
         if (nextSlotNumber == 4)
@@ -65,6 +67,13 @@ public class PlayerJoin : MonoBehaviour
         //TODO: 4 players auto start??
         if (nextSlotNumber == 2)
             startPrompt.SetActive(true);
+    }
+
+    private IEnumerator VibrateJoin(PlayerIndex index)
+    {
+        GamePad.SetVibration(index, 0.3f, 0.3f);
+        yield return new WaitForSeconds(0.1f);
+        GamePad.SetVibration(index, 0, 0);
     }
 
     private void UpdateHoverPosition()
