@@ -59,6 +59,8 @@ public class Bullet : MonoBehaviour
         if (exploding) return;
         exploding = true;
 
+        SoundManager.PlayExplodeSound();
+
         GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         // TODO: Smarter way of changing color?
         ParticleSystem.ColorOverLifetimeModule colorOverLifetime = explosion.GetComponent<ParticleSystem>().colorOverLifetime;

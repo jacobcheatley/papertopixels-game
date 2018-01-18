@@ -112,6 +112,8 @@ public class Player : MonoBehaviour
 
         if (TakeDamage(damage))
             sourceStats.Kills++;
+
+        SoundManager.PlayHitSound();
     }
 
     public void LavaHit()
@@ -120,6 +122,7 @@ public class Player : MonoBehaviour
         {
             if (!TakeDamage(1))
                 StartCoroutine(LavaCooldown());
+            SoundManager.PlayLavaSound();
         }
     }
 
@@ -217,6 +220,8 @@ public class Player : MonoBehaviour
             ammo--;
             playerUI.SetAmmo(ammo);
             Stats.ShotsFired++;
+
+            SoundManager.PlayShootSound();
         }
     }
 
@@ -250,6 +255,7 @@ public class Player : MonoBehaviour
 
     private IEnumerator Dash(Vector3 direction)
     {
+        SoundManager.PlayDashSound();
         dashing = true;
         canDash = false;
         Stats.Dashes++;

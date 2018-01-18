@@ -340,3 +340,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sfxSource: {fileID: 401518061}
+  hitSounds:
+  - {fileID: 8300000, guid: db2aa340b8ecad740a56db1a741379c2, type: 3}
+  - {fileID: 8300000, guid: 6b1fed483c501f843b3a97d0f6bc215a, type: 3}
+  - {fileID: 8300000, guid: c12e32488d2f4ef448a65a6362c2c832, type: 3}
+  - {fileID: 8300000, guid: 537b46de57136df468f67a2e02422d10, type: 3}
+  explodeSounds:
+  - {fileID: 8300000, guid: 7bba9992ae0be4e4eb260206aa56afa7, type: 3}
+  - {fileID: 8300000, guid: a41069ccf6ce12e49ba7e833b0161c56, type: 3}
+  - {fileID: 8300000, guid: c4d2ed538e01f9d4e86c3870b342d4c6, type: 3}
+  - {fileID: 8300000, guid: 3d37db48e3dffbc498889b04f8255af2, type: 3}
+  shootSounds:
+  - {fileID: 8300000, guid: 7dbadc0138c0fb54e9bf52a350fdbc04, type: 3}
+  lavaSounds:
+  - {fileID: 8300000, guid: d9518a4a22244714bb11b7038845a47b, type: 3}
+  dashSounds:
+  - {fileID: 8300000, guid: 31ce88926eedefc419635a6fc9e5f6b1, type: 3}
