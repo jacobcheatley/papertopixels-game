@@ -26,6 +26,7 @@ public class SceneControl : MonoBehaviour
 
     public static void ToGame(int id)
     {
+        Controller.EndAllVibration();
         instance.StartCoroutine(instance.Game_(id));
     }
 

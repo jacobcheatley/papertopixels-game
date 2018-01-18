@@ -235,6 +235,7 @@ public class Player : MonoBehaviour
         canDash = true;
         dashing = false;
         canShoot = true;
+        damagedRecently = 0;
         GamePad.SetVibration(playerIndex, 0, 0);
         playerUI.SetAmmo(ammo);
         rb.velocity = Vector3.zero;

@@ -6,7 +6,7 @@ public class DontGoThroughThings : MonoBehaviour
     // events to be fired - but it won't pass through the trigger
     public bool sendTriggerMessage = false;
 
-    public LayerMask layerMask = -1; //make sure we aren't in this layer 
+    public LayerMask layerMask = -1; //make sure we aren't in this layer
     public float skinWidth = 0.1f; //probably doesn't need to be changed 
 
     private float minimumExtent;

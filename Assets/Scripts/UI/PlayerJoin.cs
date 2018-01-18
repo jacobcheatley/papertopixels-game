@@ -57,7 +57,10 @@ public class PlayerJoin : MonoBehaviour
     {
         slots[nextSlotNumber].Init(index, ignoreIndices);
         nextSlotNumber++;
-        UpdateHoverPosition();
+        if (nextSlotNumber == 4)
+            emptySlotHover.gameObject.SetActive(false);
+        else
+            UpdateHoverPosition();
 
         //TODO: 4 players auto start??
         if (nextSlotNumber == 2)
