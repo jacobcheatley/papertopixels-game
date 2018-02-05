@@ -10,6 +10,7 @@ public class PlayerPen : MonoBehaviour
     [SerializeField] private GameObject joinText;
     [SerializeField] private GameObject playerIndicator;
     [SerializeField] private MeshRenderer[] borderRenderers;
+    [SerializeField] private GameObject playerPrefab;
 
     [Header("Setings")]
     [SerializeField] private Color[] colors;
@@ -21,6 +22,7 @@ public class PlayerPen : MonoBehaviour
     private GamePadState state;
     private GamePadState prevState;
     private Material wallMaterial;
+    private Player player;
 
     void Awake()
     {
@@ -40,9 +42,13 @@ public class PlayerPen : MonoBehaviour
 
         // Set up player index
         playerIndex = index;
-
         playerIndicator.SetActive(true);
         playerIndicator.transform.localRotation = UIHelper.PlayerIndicatorRotation(index);
+
+        // Create player
+        GameObject playerObject = Instantiate(playerPrefab, transform.position, Quaternion.identity, transform);
+        player = playerObject.GetComponent<Player>();
+        player.Init(GetInfo());
 
         // Set up colors
         slotIndex = ignoreIndices.Count;
@@ -71,35 +77,21 @@ public class PlayerPen : MonoBehaviour
         prevState = state;
         state = GamePad.GetState(playerIndex);
 
-        if (Controller.LeftPress(prevState, state))
+        if (state.DPad.Left == ButtonState.Pressed && prevState.DPad.Left == ButtonState.Released)
             PrevColor();
-        else if (Controller.RightPress(prevState, state))
+        else if (state.DPad.Right == ButtonState.Pressed && prevState.DPad.Right == ButtonState.Released)
             NextColor();
-    }
-
-    private IEnumerator VibrateLeft()
-    {
-        GamePad.SetVibration(playerIndex, 0.2f, 0);
-        yield return new WaitForSeconds(0.15f);
-        GamePad.SetVibration(playerIndex, 0, 0);
-    }
-
-    private IEnumerator VibrateRight()
-    {
-        GamePad.SetVibration(playerIndex, 0, 0.2f);
-        yield return new WaitForSeconds(0.15f);
-        GamePad.SetVibration(playerIndex, 0, 0);
     }
 
     private void DisplayColor()
     {
         ignoreIndices[slotIndex] = colorIndex;
         wallMaterial.color = colors[colorIndex];
+        player.SetColor(colors[colorIndex]);
     }
 
     public void NextColor()
     {
-        StartCoroutine(VibrateRight());
         int indexToTry = colorIndex;
 
         while (ignoreIndices.Contains(indexToTry))
@@ -113,7 +105,6 @@ public class PlayerPen : MonoBehaviour
 
     public void PrevColor()
     {
-        StartCoroutine(VibrateLeft());
         int indexToTry = colorIndex;
 
         while (ignoreIndices.Contains(indexToTry))

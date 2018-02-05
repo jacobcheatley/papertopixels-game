@@ -23,7 +23,13 @@ public class Bullet : MonoBehaviour
         index = slotInfo.Index;
 
         // Appearance
-        color = slotInfo.Color;
+        SetColor(slotInfo.Color);
+    }
+
+    public void SetColor(Color color)
+    {
+        this.color = color;
+
         Material newMaterial = new Material(meshRenderer.material);
         newMaterial.color = color;
         meshRenderer.material = newMaterial;

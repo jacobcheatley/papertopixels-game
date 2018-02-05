@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using XInputDotNetPure;
 
@@ -54,9 +56,22 @@ public class Player : MonoBehaviour
     public void Init(SlotInfo slotInfo)
     {
         playerIndex = slotInfo.Index;
-        appearance.SetColor(slotInfo.Color);
         bulletObject.GetComponent<Bullet>().Init(slotInfo);
-        Stats = Persistent.PlayerStats[playerIndex];
+        SetColor(slotInfo.Color);
+        try
+        {
+            Stats = Persistent.PlayerStats[playerIndex];
+        }
+        catch (KeyNotFoundException e)
+        {
+            Stats = new GameStats();
+        }
+    }
+
+    public void SetColor(Color color)
+    {
+        appearance.SetColor(color);
+        bulletObject.GetComponent<Bullet>().SetColor(color);
     }
 
     void Start()
