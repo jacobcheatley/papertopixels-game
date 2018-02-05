@@ -10,6 +10,8 @@ public class Thumbs : MonoBehaviour
 {
     [SerializeField] private GameObject thumbPrefab;
     [SerializeField] private GameObject preview;
+    [SerializeField] private Image leftArrow;
+    [SerializeField] private Image rightArrow;
 
     private float spacing = 141 + 30;
     private List<GameObject> thumbs = new List<GameObject>();
@@ -83,12 +85,14 @@ public class Thumbs : MonoBehaviour
             if (Controller.LeftPress(prevState, state))
             {
                 index--;
+                StartCoroutine(BounceSize(leftArrow));
                 if (index < 0) index = 0;
                 else SnapToIndex();
             }
             else if (Controller.RightPress(prevState, state))
             {
                 index++;
+                StartCoroutine(BounceSize(rightArrow));
                 if (index >= thumbs.Count) index = thumbs.Count - 1;
                 else SnapToIndex();
             }
@@ -99,11 +103,22 @@ public class Thumbs : MonoBehaviour
         }
     }
 
+    private IEnumerator BounceSize(Image image)
+    {
+        image.rectTransform.localScale = Vector3.one * 0.8f;
+        yield return new WaitForSeconds(0.1f);
+        image.rectTransform.localScale = Vector3.one * 1.1f;
+        yield return new WaitForSeconds(0.1f);
+        image.rectTransform.localScale = Vector3.one * 1f;
+    }
+
     private void SnapToIndex()
     {
-        // TODO: Nice animation on switch
         float target = index * spacing;
         rectTransform.localPosition = new Vector3(-target, rectTransform.localPosition.y);
+
+        leftArrow.color = new Color(1, 1, 1,  index == 0 ? 0 : 0.5f);
+        rightArrow.color = new Color(1, 1, 1,  index == thumbs.Count - 1 ? 0 : 0.5f);
     }
 
     private void AddThumb(GameObject thumb, int id)
