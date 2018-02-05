@@ -6,11 +6,15 @@ using XInputDotNetPure;
 
 public class PlayerJoin : MonoBehaviour
 {
-    [SerializeField] private GameObject slotPrefab;
-    [SerializeField] private RectTransform emptySlotHover;
+    [Header("References")]
+    [SerializeField] private Transform penContainer;
+    [SerializeField] private GameObject penPrefab;
     [SerializeField] private GameObject startPrompt;
 
-    private PlayerSlot[] slots = new PlayerSlot[4];
+    [Header("Settings")]
+    [SerializeField] private float penSpacing = 8;
+
+    private PlayerPen[] playerPens = new PlayerPen[4];
     private bool[] joined = { false, false, false, false };
     private int nextSlotNumber;
     private List<int> ignoreIndices = new List<int>();
@@ -19,14 +23,12 @@ public class PlayerJoin : MonoBehaviour
     {
         startPrompt.SetActive(false);
 
+        // Set up pens
         for (int i = 0; i < 4; i++)
         {
-            // Create slots
-            GameObject slot = Instantiate(slotPrefab, transform);
-            RectTransform rt = slot.GetComponent<RectTransform>();
-            rt.anchorMin = rt.anchorMax = new Vector2(i / 3f, 0.5f);
-            slot.SetActive(false);
-            slots[i] = slot.GetComponent<PlayerSlot>();
+            GameObject newPen = Instantiate(penPrefab, penContainer);
+            newPen.transform.localPosition = Vector3.right * i * penSpacing;
+            playerPens[i] = newPen.GetComponent<PlayerPen>();
         }
 
         nextSlotNumber = 0;
@@ -56,35 +58,25 @@ public class PlayerJoin : MonoBehaviour
 
     private void AssignNextSlot(PlayerIndex index)
     {
-        StartCoroutine(VibrateJoin(index));
-        slots[nextSlotNumber].Init(index, ignoreIndices);
+        playerPens[nextSlotNumber].Init(index, ignoreIndices);
         nextSlotNumber++;
-        if (nextSlotNumber == 4)
-            emptySlotHover.gameObject.SetActive(false);
-        else
-            UpdateHoverPosition();
+        UpdateHoverPosition();
 
         //TODO: 4 players auto start??
         if (nextSlotNumber == 2)
             startPrompt.SetActive(true);
     }
 
-    private IEnumerator VibrateJoin(PlayerIndex index)
-    {
-        GamePad.SetVibration(index, 0.3f, 0.3f);
-        yield return new WaitForSeconds(0.1f);
-        GamePad.SetVibration(index, 0, 0);
-    }
-
     private void UpdateHoverPosition()
     {
-        emptySlotHover.anchorMin = emptySlotHover.anchorMax = slots[nextSlotNumber].GetComponent<RectTransform>().anchorMin;
+        if (nextSlotNumber < 4)
+            playerPens[nextSlotNumber].SetAsNext();
     }
 
     private void StartGame()
     {
         Debug.Log("Start Game");
-        Persistent.SetPlayerSlots(slots.Take(nextSlotNumber).Select(s => s.GetInfo()).ToList());
+        Persistent.SetPlayerSlots(playerPens.Take(nextSlotNumber).Select(s => s.GetInfo()).ToList());
         SceneControl.ToLevelSelect();
     }
 }
