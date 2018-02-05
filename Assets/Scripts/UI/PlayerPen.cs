@@ -9,6 +9,7 @@ public class PlayerPen : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameObject joinText;
     [SerializeField] private GameObject playerIndicator;
+    [SerializeField] private GameObject[] activeWhenInit;
     [SerializeField] private MeshRenderer[] borderRenderers;
     [SerializeField] private GameObject playerPrefab;
 
@@ -29,6 +30,8 @@ public class PlayerPen : MonoBehaviour
         // Hide UI
         playerIndicator.SetActive(false);
         joinText.SetActive(false);
+        foreach (GameObject o in activeWhenInit)
+            o.SetActive(false);
 
         // Set up wall materials
         wallMaterial = new Material(borderRenderers[0].material);
@@ -65,6 +68,9 @@ public class PlayerPen : MonoBehaviour
         }
 
         joinText.SetActive(false);
+
+        foreach (GameObject o in activeWhenInit)
+            o.SetActive(true);
     }
 
     public void SetAsNext()

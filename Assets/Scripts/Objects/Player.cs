@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
         {
             Stats = Persistent.PlayerStats[playerIndex];
         }
-        catch (KeyNotFoundException e)
+        catch (KeyNotFoundException)
         {
             Stats = new GameStats();
         }
