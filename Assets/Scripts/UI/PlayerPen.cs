@@ -49,7 +49,7 @@ public class PlayerPen : MonoBehaviour
         playerIndicator.transform.localRotation = UIHelper.PlayerIndicatorRotation(index);
 
         // Create player
-        GameObject playerObject = Instantiate(playerPrefab, transform.position, Quaternion.identity, transform);
+        GameObject playerObject = Instantiate(playerPrefab, transform.position + Vector3.up, Quaternion.identity, transform);
         player = playerObject.GetComponent<Player>();
         player.Init(GetInfo());
 
