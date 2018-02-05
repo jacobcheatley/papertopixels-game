@@ -465,7 +465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77c84a4fa2e060a48806de0cd527a515, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roundTime: 5
+  roundTime: 90
   text: {fileID: 1881433137}
   beepSound: {fileID: 8300000, guid: 1f8ca4f0faffa83438638b761ad88575, type: 3}
 --- !u!1 &1881433135
