@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using XInputDotNetPure;
@@ -12,6 +11,8 @@ public class PlayerPen : MonoBehaviour
     [SerializeField] private GameObject[] activeWhenInit;
     [SerializeField] private MeshRenderer[] borderRenderers;
     [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private Image playerNumberBackground;
+    [SerializeField] private Text playerNumberText;
 
     [Header("Setings")]
     [SerializeField] private Color[] colors;
@@ -71,6 +72,9 @@ public class PlayerPen : MonoBehaviour
 
         foreach (GameObject o in activeWhenInit)
             o.SetActive(true);
+
+        // Set up player number
+        playerNumberText.text = $"Player {ignoreIndices.Count}";
     }
 
     public void SetAsNext()
@@ -94,6 +98,7 @@ public class PlayerPen : MonoBehaviour
         ignoreIndices[slotIndex] = colorIndex;
         wallMaterial.color = colors[colorIndex];
         player.SetColor(colors[colorIndex]);
+        playerNumberBackground.color = colors[colorIndex];
     }
 
     public void NextColor()

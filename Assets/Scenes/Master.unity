@@ -405,6 +405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sfxSource: {fileID: 401518061}
+  musicSource: {fileID: 0}
   hitSounds:
   - {fileID: 8300000, guid: db2aa340b8ecad740a56db1a741379c2, type: 3}
   - {fileID: 8300000, guid: 6b1fed483c501f843b3a97d0f6bc215a, type: 3}
