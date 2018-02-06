@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour
 {
     [Header("Sources")]
     [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioSource musicSource;
 
     [Header("Clips")]
     [SerializeField] private AudioClip[] hitSounds;
@@ -11,7 +13,6 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip[] shootSounds;
     [SerializeField] private AudioClip[] lavaSounds;
     [SerializeField] private AudioClip[] dashSounds;
-    // TODO: Lava hit, dash sounds
 
     private static SoundManager instance;
 

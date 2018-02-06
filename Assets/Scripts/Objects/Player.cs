@@ -87,7 +87,7 @@ public class Player : MonoBehaviour
         maxAmmo = ammo;
         maxHealth = health;
 
-        transform.rotation = Quaternion.LookRotation(-transform.position);
+        transform.rotation = Quaternion.LookRotation(-transform.position + Vector3.up * transform.position.y); // Point to centre, IGNORE Y
         currentLook = -transform.position.normalized;
     }
 
