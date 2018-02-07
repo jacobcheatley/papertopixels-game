@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bd8e612ac6dcb14ab090217ed657331, type: 3}
+  m_Name: Level Prefab Store
+  m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 1014925658318658, guid: 000d5e64110940745b79572430cd6188,
+    type: 2}
+  wallCorner: {fileID: 1209458353187574, guid: bfe9cedda96a94643aef2ee69f00d961, type: 2}
+  wallSegment: {fileID: 1737489127416642, guid: e140a3fc30c86564987e9c4dcb216add,
+    type: 2}
+  ammoPrefab: {fileID: 1350314307204662, guid: 0b7a7294c41fee14288c4e2778d21dfb, type: 2}
+  healthPrefab: {fileID: 1417461120685802, guid: 496ee5993c246854e8a65e813a8caf70,
+    type: 2}
+  groundPrefab: {fileID: 1381524952041206, guid: 265ef5b5f35060648b3cc573805b6d47,
+    type: 2}
+  lavaPrefab: {fileID: 1433555989361892, guid: c47609ba6f9e83849b2161b1bc0fa6fc, type: 2}

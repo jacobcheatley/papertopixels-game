@@ -9,7 +9,6 @@ using XInputDotNetPure;
 public class Thumbs : MonoBehaviour
 {
     [SerializeField] private GameObject thumbPrefab;
-    [SerializeField] private GameObject preview;
     [SerializeField] private Image leftArrow;
     [SerializeField] private Image rightArrow;
 
@@ -18,6 +17,7 @@ public class Thumbs : MonoBehaviour
     private List<int> ids = new List<int>();
     private int index = 0;
     private RectTransform rectTransform;
+    private int[] maps;
 
     // TODO: Proper state handling
     private GamePadState state;
@@ -28,12 +28,10 @@ public class Thumbs : MonoBehaviour
         prevState = state = GamePad.GetState(PlayerIndex.One);
         rectTransform = GetComponent<RectTransform>();
         StartCoroutine(LoadAllThumbs());
-        preview.SetActive(true);
     }
 
     private IEnumerator LoadAllThumbs()
     {
-        int[] maps = {0};
         using (UnityWebRequest www = UnityWebRequest.Get("http://papertopixels.tk/maps"))
         {
             yield return www.SendWebRequest();
@@ -66,6 +64,8 @@ public class Thumbs : MonoBehaviour
             image.GetComponent<Image>().sprite = sprite;
             AddThumb(image, i);
         }
+
+        SnapToIndex();
     }
 
     void Update()
@@ -119,6 +119,8 @@ public class Thumbs : MonoBehaviour
 
         leftArrow.color = new Color(1, 1, 1,  index == 0 ? 0 : 0.5f);
         rightArrow.color = new Color(1, 1, 1,  index == thumbs.Count - 1 ? 0 : 0.5f);
+
+        LevelPreview.Create(maps[index]);
     }
 
     private void AddThumb(GameObject thumb, int id)
