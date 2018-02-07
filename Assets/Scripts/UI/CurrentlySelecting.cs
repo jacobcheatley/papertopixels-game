@@ -27,6 +27,6 @@ public class CurrentlySelecting : MonoBehaviour
         playerIndicator.rectTransform.rotation = UIHelper.PlayerIndicatorRotation(index);
         int playerNumber = Persistent.PlayerSlots.FindIndex(si => si.Index == index);
         background.color = Persistent.PlayerSlots[playerNumber].Color;
-        playerNumberText.text = $"Player {playerNumber + 1}\nSelecting Map";
+        playerNumberText.text = $"Player {playerNumber + 1}\nSelecting";
     }
 }
