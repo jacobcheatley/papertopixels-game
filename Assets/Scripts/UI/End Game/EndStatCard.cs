@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using XInputDotNetPure;
 
 public class EndStatCard : MonoBehaviour
 {

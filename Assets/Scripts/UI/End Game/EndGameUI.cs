@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using XInputDotNetPure;
 
 public class EndGameUI : MonoBehaviour
