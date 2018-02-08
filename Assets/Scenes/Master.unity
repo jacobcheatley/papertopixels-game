@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 61529288}
   m_Layer: 0
   m_Name: Directional Light
-  m_TagString: Untagged
+  m_TagString: MainLight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -219,7 +219,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.33161598, g: 0.4724138, b: 0.23713322, a: 0}
+  m_BackGroundColor: {r: 0.33910033, g: 0.44158354, b: 0.47058824, a: 1}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
