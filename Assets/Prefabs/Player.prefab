@@ -673,6 +673,8 @@ MonoBehaviour:
   followUIPrefab: {fileID: 1173959732142898, guid: 01bc2867f844a3c4fb365d3977cb23b1,
     type: 2}
   aimLine: {fileID: 120747119729973542}
+  deathExplosionPrefab: {fileID: 1428634571159278, guid: 78c20ed3a6532644391b180faf25c842,
+    type: 2}
   accelFactor: 16
   dashCooldown: 1.5
   dashSpeed: 30

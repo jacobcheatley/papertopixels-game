@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerAppearance appearance;
     [SerializeField] private GameObject followUIPrefab;
     [SerializeField] private LineRenderer aimLine;
+    [SerializeField] private GameObject deathExplosionPrefab;
     [Header("Control")]
     [SerializeField] private float accelFactor = 8.0f;
     [Header("Dash")]
@@ -242,7 +243,15 @@ public class Player : MonoBehaviour
 
     private void Respawn()
     {
-        // TODO: Explode myself
+        // Explosion
+        GameObject explosion = Instantiate(deathExplosionPrefab, transform.position, Quaternion.identity);
+        // TODO: Smarter way of changing color?
+        var ps = explosion.GetComponent<ParticleSystem>();
+        var main = ps.main;
+        main.startColor = GetColor();
+        Destroy(explosion, 2f);
+
+        // Gameplay
         Refresh();
         GameControl.Respawn(this);
     }
