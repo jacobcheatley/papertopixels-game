@@ -166,8 +166,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.3
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Intensity: 0
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -465,7 +465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77c84a4fa2e060a48806de0cd527a515, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roundTime: 12
+  roundTime: 15
   text: {fileID: 1881433137}
   beepSound: {fileID: 8300000, guid: 1f8ca4f0faffa83438638b761ad88575, type: 3}
   warnLight: {fileID: 467660167}

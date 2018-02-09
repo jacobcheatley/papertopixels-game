@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: defc4c7dea7de184d88c19437ed5c12a
-timeCreated: 1517793914
+timeCreated: 1518146313
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -13,6 +13,8 @@ TextureImporter:
     21300012: Controls_6
     21300014: Controls_7
     21300016: Controls_8
+    21300018: Controls_9
+    21300020: Controls_10
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -221,6 +223,34 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Controls_9
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Controls_10
+      rect:
+        serializedVersion: 2
+        x: 512
         y: 256
         width: 256
         height: 256
