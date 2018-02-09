@@ -7,14 +7,19 @@ public class TimerUI : MonoBehaviour
     [SerializeField] private int roundTime = 90;
     [SerializeField] private Text text;
     [SerializeField] private AudioClip beepSound;
+    [SerializeField] private Light warnLight;
 
-    private int timeRemaining;
     private Light mainLight;
+    private int timeRemaining;
+    private Color cameraOriginal;
+    private float mainIntensity;
 
     public void Init()
     {
         timeRemaining = roundTime;
+        cameraOriginal = Camera.main.backgroundColor;
         mainLight = GameObject.FindGameObjectWithTag("MainLight").GetComponent<Light>();
+        mainIntensity = mainLight.intensity;
         StartCoroutine(CountDown());
     }
 
@@ -25,20 +30,33 @@ public class TimerUI : MonoBehaviour
             text.text = timeRemaining.ToString();
             yield return new WaitForSeconds(1);
             timeRemaining--;
-            if (timeRemaining == 10)
+            if (timeRemaining == 11)
                 StartCoroutine(FlashRed());
-            if (0 < timeRemaining && timeRemaining <= 10)
-                SoundManager.PlayClip(beepSound, 1f / timeRemaining);
+            if (0 <= timeRemaining && timeRemaining <= 10)
+                SoundManager.PlayClip(beepSound, 1f / (timeRemaining + 3));
         }
+        yield return new WaitForSeconds(0.5f);
+        warnLight.intensity = 0;
+        Camera.main.backgroundColor = cameraOriginal;
+        mainLight.intensity = mainIntensity;
         SceneControl.ToEndGame();
     }
 
     private IEnumerator FlashRed()
     {
-        float flashTime = 0;
+        yield return new WaitForSeconds(0.5f);
+        float flashTime = 0.5f;
         while (true)
         {
-            mainLight.color = Color.Lerp(Color.white, Color.red, (Mathf.Sin(flashTime * Mathf.PI * 2) + 1) / 2f); // Sine waves are fun
+            // Sine colour lerping
+            float lerpValue = (Mathf.Cos(flashTime * Mathf.PI * 2) + 1) / 2f;
+            lerpValue = lerpValue * lerpValue;
+            warnLight.intensity = lerpValue * 0.4f;
+            Camera.main.backgroundColor = Color.Lerp(cameraOriginal, Color.red, lerpValue);
+
+            // Dimming main light
+            mainLight.intensity = mainIntensity * (1 - ((flashTime - 0.5f) / 20f));
+
             flashTime += Time.deltaTime;
             yield return null;
         }
