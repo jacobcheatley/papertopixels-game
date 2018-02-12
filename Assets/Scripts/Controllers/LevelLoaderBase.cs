@@ -160,8 +160,8 @@ public class LevelLoaderBase : MonoBehaviour
             Vector3 avg = line.Average();
             float radius = line.Points.Average(p => Vector3.Distance(p, avg));
 
-            GameObject ammo = Instantiate(prefabs.ammoPrefab, avg, Quaternion.identity, levelContainer);
-            ammo.transform.localScale = new Vector3(radius * 2, 1, radius * 2);
+            GameObject ammo = Instantiate(prefabs.ammoPrefab, avg + Vector3.up * 0.75f, Quaternion.identity, levelContainer);
+            ammo.transform.localScale = new Vector3(radius * 2, ammo.transform.localScale.y, radius * 2);
         }
     }
 
@@ -172,8 +172,8 @@ public class LevelLoaderBase : MonoBehaviour
             Vector3 avg = line.Average();
             float radius = line.Points.Average(p => Vector3.Distance(p, avg));
 
-            GameObject health = Instantiate(prefabs.healthPrefab, avg, Quaternion.identity, levelContainer);
-            health.transform.localScale = new Vector3(radius * 2, 1, radius * 2);
+            GameObject health = Instantiate(prefabs.healthPrefab, avg + Vector3.up * 0.75f, Quaternion.identity, levelContainer);
+            health.transform.localScale = new Vector3(radius * 2, health.transform.localScale.y, radius * 2);
         }
     }
     #endregion
