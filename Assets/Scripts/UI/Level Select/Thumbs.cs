@@ -32,7 +32,7 @@ public class Thumbs : MonoBehaviour
 
     private IEnumerator LoadAllThumbs()
     {
-        using (UnityWebRequest www = UnityWebRequest.Get("http://papertopixels.tk/maps"))
+        using (UnityWebRequest www = UnityWebRequest.Get($"{Persistent.Configs.address}/maps"))
         {
             yield return www.SendWebRequest();
 
@@ -51,7 +51,7 @@ public class Thumbs : MonoBehaviour
 
             if ((tex = FileCache.LoadThumb(i)) == null)
             {
-                string url = $"http://papertopixels.tk/thumb/{i}";
+                string url = $"{Persistent.Configs.address}/thumb/{i}";
                 WWW www = new WWW(url);
                 yield return www;
                 tex = www.texture;

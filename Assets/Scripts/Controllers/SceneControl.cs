@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,6 +7,7 @@ public class SceneControl : MonoBehaviour
 {
     private static SceneControl instance;
 
+    private static string masterName = "Master";
     private static string mainName = "Main";
     private static string lobbyName = "Lobby";
     private static string levelName = "LevelSelect";
@@ -17,7 +19,7 @@ public class SceneControl : MonoBehaviour
     {
         instance = this;
         instance.StartCoroutine(instance.Setup());
-}
+    }
     
     public static void ToLevelSelect()
     {
@@ -43,9 +45,15 @@ public class SceneControl : MonoBehaviour
 
     IEnumerator Setup()
     {
-        yield return SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName(mainName));
-        yield return SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName(levelName));
-        yield return SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName(endName));
+        foreach (string s in new string[] {mainName, lobbyName, levelName, endName})
+        {
+            if (SceneManager.GetSceneByName(s).isLoaded)
+                yield return SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName(s));
+        }
+
+        yield return SceneManager.LoadSceneAsync(lobbyName, LoadSceneMode.Additive);
+
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(lobbyName));
     }
 
     IEnumerator LevelSelect_()

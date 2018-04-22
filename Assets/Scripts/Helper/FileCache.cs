@@ -4,8 +4,18 @@ using UnityEngine;
 
 public static class FileCache
 {
-    private static string savePath =
+    private static readonly string savePath =
         $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments).Replace("\\", "/")}/My Games/PaperToPixels";
+
+    public static GameConfigs Config()
+    {
+        string path = $"{savePath}/config.json";
+
+        if (!File.Exists(path))
+            return new GameConfigs();
+        
+        return JsonUtility.FromJson<GameConfigs>(File.ReadAllText(path));
+    }
 
     public static Texture2D LoadThumb(int id)
     {

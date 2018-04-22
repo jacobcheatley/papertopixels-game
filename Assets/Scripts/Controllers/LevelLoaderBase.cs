@@ -40,7 +40,7 @@ public class LevelLoaderBase : MonoBehaviour
 
             if ((mapText = FileCache.LoadMap(id)) == null)
             {
-                using (UnityWebRequest www = UnityWebRequest.Get($"http://papertopixels.tk/map/{id}"))
+                using (UnityWebRequest www = UnityWebRequest.Get($"{Persistent.Configs.address}/map/{id}"))
                 {
                     yield return www.SendWebRequest();
 

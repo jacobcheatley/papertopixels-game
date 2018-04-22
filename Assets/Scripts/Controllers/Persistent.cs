@@ -9,6 +9,7 @@ public class Persistent : MonoBehaviour
     public static Dictionary<PlayerIndex, GameStats> PlayerStats = new Dictionary<PlayerIndex, GameStats>();
     public static List<GameObject> PlayerObjects = new List<GameObject>();
     public static PlayerIndex LobbyController;
+    public static GameConfigs Configs = FileCache.Config();
 
     public static void SetPlayerSlots(List<SlotInfo> slotsJoining)
     {
