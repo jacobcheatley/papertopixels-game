@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class Pulse : MonoBehaviour
 {
     private Image image;
+    [SerializeField] private float frequency = 2f;
 
     void Start()
     {
@@ -12,6 +13,6 @@ public class Pulse : MonoBehaviour
 
     void Update()
     {
-        image.color = new Color(1, 1, 1, Mathf.Sin(Time.time));
+        image.color = new Color(1, 1, 1, (Mathf.Sin(Time.time * frequency) + 1) / 2f);
     }
 }

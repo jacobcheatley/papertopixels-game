@@ -25,6 +25,7 @@ public class PlayerPen : MonoBehaviour
     private GamePadState prevState;
     private Material wallMaterial;
     private Player player;
+    private bool initialised = false;
 
     void Awake()
     {
@@ -75,6 +76,8 @@ public class PlayerPen : MonoBehaviour
 
         // Set up player number
         playerNumberText.text = $"Player {ignoreIndices.Count}";
+
+        initialised = true;
     }
 
     public void SetAsNext()
@@ -84,6 +87,8 @@ public class PlayerPen : MonoBehaviour
 
     void Update()
     {
+        if (!initialised) return;
+
         prevState = state;
         state = GamePad.GetState(playerIndex);
 

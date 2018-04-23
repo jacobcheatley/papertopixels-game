@@ -37,12 +37,12 @@ public class SoundManager : MonoBehaviour
 
     public static void PlayExplodeSound()
     {
-        PlayRandomClip(instance.explodeSounds);
+        PlayRandomClip(instance.explodeSounds, 0.1f);
     }
 
     public static void PlayShootSound()
     {
-        PlayRandomClip(instance.shootSounds);
+        PlayRandomClip(instance.shootSounds, 0.1f);
     }
 
     public static void PlayLavaSound()
