@@ -6,10 +6,18 @@ public abstract class Pickup : MonoBehaviour
 {
     [SerializeField] private Image cooldownImage;
     [SerializeField] private float cooldown = 10;
+    [SerializeField] private Light spotLight;
 
     private bool stocked = true;
 
     protected abstract void PickupEffect(Player player);
+
+    void Start()
+    {
+        Vector3 spotPos = spotLight.transform.position;
+        spotLight.transform.position = new Vector3(spotPos.x, spotPos.y * transform.localScale.x, spotPos.z);
+        StartCoroutine("Pulse");
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -32,9 +40,35 @@ public abstract class Pickup : MonoBehaviour
         }
     }
 
+    private IEnumerator Pulse()
+    {
+        float minAngle = 30;
+        float maxAngle = 60;
+        float currentAngle = minAngle;
+        float speed = 20;
+
+        while (true)
+        {
+            while (currentAngle < maxAngle)
+            {
+                currentAngle += Time.deltaTime * speed;
+                spotLight.spotAngle = currentAngle;
+                yield return null;
+            }
+            while (currentAngle > minAngle)
+            {
+                currentAngle -= Time.deltaTime * speed;
+                spotLight.spotAngle = currentAngle;
+                yield return null;
+            }
+        }
+    }
+
     private IEnumerator Restock()
     {
         float percent = 0;
+        StopCoroutine("Pulse");
+        spotLight.enabled = false;
 
         while (percent < 1)
         {
@@ -45,5 +79,7 @@ public abstract class Pickup : MonoBehaviour
 
         cooldownImage.fillAmount = 0;
         stocked = true;
+        spotLight.enabled = true;
+        StartCoroutine("Pulse");
     }
 }
