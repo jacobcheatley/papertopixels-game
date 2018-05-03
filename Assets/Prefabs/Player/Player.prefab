@@ -675,6 +675,7 @@ MonoBehaviour:
   aimLine: {fileID: 120747119729973542}
   deathExplosionPrefab: {fileID: 1428634571159278, guid: 78c20ed3a6532644391b180faf25c842,
     type: 2}
+  gunTransform: {fileID: 4919956956759522}
   accelFactor: 16
   dashCooldown: 1.5
   dashSpeed: 30

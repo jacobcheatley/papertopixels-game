@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject followUIPrefab;
     [SerializeField] private LineRenderer aimLine;
     [SerializeField] private GameObject deathExplosionPrefab;
+    [SerializeField] private Transform gunTransform;
     [Header("Control")]
     [SerializeField] private float accelFactor = 8.0f;
     [Header("Dash")]
@@ -272,7 +273,17 @@ public class Player : MonoBehaviour
     private IEnumerator Reload()
     {
         canShoot = false;
-        yield return new WaitForSeconds(shootCooldown);
+        float currentTime = 0;
+        Vector3 originalPosition = gunTransform.localPosition;
+        while (currentTime <= shootCooldown)
+        {
+            float x = (shootCooldown - currentTime);
+            float y = -x * (x - 1); // Quadratic movement
+            gunTransform.localPosition = new Vector3(originalPosition.x, originalPosition.y, originalPosition.z - y);
+            yield return null;
+            currentTime += Time.deltaTime;
+        }
+        gunTransform.localPosition = originalPosition;
         canShoot = true;
     }
 
