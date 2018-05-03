@@ -313,15 +313,21 @@ public class Player : MonoBehaviour
         return appearance.GetColor();
     }
 
-    public void RefillAmmo()
+    public bool RefillAmmo()
     {
+        if (ammo >= maxAmmo) return false;
+
         ammo = maxAmmo;
         playerUI.SetAmmo(ammo);
+        return true;
     }
 
-    public void RefillHealth()
+    public bool RefillHealth()
     {
+        if (health >= maxHealth) return false;
+
         health = maxHealth;
         playerUI.SetHealth(health, maxHealth);
+        return true;
     }
 }

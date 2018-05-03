@@ -10,7 +10,7 @@ public abstract class Pickup : MonoBehaviour
 
     private bool stocked = true;
 
-    protected abstract void PickupEffect(Player player);
+    protected abstract bool PickupEffect(Player player);
 
     void Start()
     {
@@ -31,13 +31,12 @@ public abstract class Pickup : MonoBehaviour
 
     private void HandleCollision(Collider other)
     {
-        if (other.tag == "Player" && stocked)
-        {
-            stocked = false;
-            Player player = other.GetComponent<Player>();
-            PickupEffect(player);
-            StartCoroutine(Restock());
-        }
+        if (other.tag != "Player" || !stocked) return;
+        Player player = other.GetComponent<Player>();
+        if (!PickupEffect(player)) return;
+
+        stocked = false;
+        StartCoroutine(Restock());
     }
 
     private IEnumerator Pulse()

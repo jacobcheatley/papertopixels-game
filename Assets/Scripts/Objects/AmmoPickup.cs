@@ -1,7 +1,10 @@
 ﻿class AmmoPickup : Pickup
 {
-    protected override void PickupEffect(Player player)
+    protected override bool PickupEffect(Player player)
     {
-        player.RefillAmmo();
+        if (!player.RefillAmmo()) return false;
+
+        SoundManager.PlayReloadSound();
+        return true;
     }
 }

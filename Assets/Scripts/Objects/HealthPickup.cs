@@ -1,7 +1,9 @@
 ﻿class HealthPickup : Pickup
 {
-    protected override void PickupEffect(Player player)
+    protected override bool PickupEffect(Player player)
     {
-        player.RefillHealth();
+        if (!player.RefillHealth()) return false;
+
+        return true;
     }
 }

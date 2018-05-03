@@ -422,3 +422,5 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d9518a4a22244714bb11b7038845a47b, type: 3}
   dashSounds:
   - {fileID: 8300000, guid: 31ce88926eedefc419635a6fc9e5f6b1, type: 3}
+  reloadSounds:
+  - {fileID: 8300000, guid: e4ff3acb218234e43beef9b0a47704c0, type: 3}

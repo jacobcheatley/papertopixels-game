@@ -12,6 +12,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip[] shootSounds;
     [SerializeField] private AudioClip[] lavaSounds;
     [SerializeField] private AudioClip[] dashSounds;
+    [SerializeField] private AudioClip[] reloadSounds;
 
     private static SoundManager instance;
 
@@ -53,5 +54,10 @@ public class SoundManager : MonoBehaviour
     public static void PlayDashSound()
     {
         PlayRandomClip(instance.dashSounds);
+    }
+
+    public static void PlayReloadSound()
+    {
+        PlayRandomClip(instance.reloadSounds, 0.5f);
     }
 }
