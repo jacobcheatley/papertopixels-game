@@ -30,7 +30,7 @@ public class EndStatCard : MonoBehaviour
         playerText.text = $"Player {playerNumber}";
         killsText.text = stats.Kills.ToString();
         deathsText.text = stats.Deaths.ToString();
-        damageText.text = $"{stats.DamageDealt} - {stats.DamageTaken}";
+        damageText.text = $"{stats.DamageDealt} : {stats.DamageTaken}";
         accuracyText.text = $"{stats.ShotsHit} / {stats.ShotsFired}";
         dashesText.text = stats.Dashes.ToString();
 

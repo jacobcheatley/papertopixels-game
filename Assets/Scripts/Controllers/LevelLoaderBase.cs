@@ -96,7 +96,7 @@ public class LevelLoaderBase : MonoBehaviour
 
         LineRenderer lRend = wall.AddComponent<LineRenderer>();
         lRend.positionCount = line.Points.Length;
-        lRend.SetPositions(line.Points.Select(p => p + Vector3.up * 0.5f).ToArray());
+        lRend.SetPositions(line.Points.Select(p => p + Vector3.up * 0.02f).ToArray());
         lRend.startWidth = lRend.endWidth = 0.25f;
         lRend.loop = line.Closed;
         lRend.shadowCastingMode = ShadowCastingMode.Off;
@@ -149,7 +149,7 @@ public class LevelLoaderBase : MonoBehaviour
         {
             Lava lava = Instantiate(prefabs.lavaPrefab, levelContainer).GetComponent<Lava>();
             lava.Init(line.Points);
-            MakeLineRenderer(line, new Color(0.85f, 0.05f, 0), lava.transform);
+            MakeLineRenderer(line, new Color(0.5f, 0.05f, 0, 0.65f), lava.transform);
         }
     }
 

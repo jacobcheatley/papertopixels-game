@@ -47,4 +47,6 @@ public class GameStats
     public int ShotsFired = 0;
     public int ShotsHit = 0;
     public int Dashes = 0;
+
+    // TOOD: Global stats, kill logs and times for timeline
 }

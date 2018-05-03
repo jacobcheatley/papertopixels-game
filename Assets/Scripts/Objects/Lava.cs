@@ -18,10 +18,12 @@ public class Lava : MonoBehaviour
         mesh.triangles = indices;
         mesh.RecalculateNormals();
         mesh.RecalculateBounds();
+        mesh.uv = points2d.Select(v => v / 10f).ToArray();
+        mesh.RecalculateTangents();
 
         filter.mesh = mesh;
         col.sharedMesh = mesh;
-        transform.position = Vector3.up * 0.5f;
+        transform.position = Vector3.up * 0.05f;
     }
 
     void OnTriggerEnter(Collider other)
