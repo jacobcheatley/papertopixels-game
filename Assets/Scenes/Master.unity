@@ -424,3 +424,5 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 31ce88926eedefc419635a6fc9e5f6b1, type: 3}
   reloadSounds:
   - {fileID: 8300000, guid: e4ff3acb218234e43beef9b0a47704c0, type: 3}
+  deathSounds:
+  - {fileID: 8300000, guid: 8a5df4448b03b7942a26ab9013aed934, type: 3}

@@ -245,11 +245,13 @@ public class Player : MonoBehaviour
     {
         // Explosion
         GameObject explosion = Instantiate(deathExplosionPrefab, transform.position, Quaternion.identity);
-        // TODO: Smarter way of changing color?
         var ps = explosion.GetComponent<ParticleSystem>();
         var main = ps.main;
         main.startColor = GetColor();
         Destroy(explosion, 2f);
+
+        // SFX
+        SoundManager.PlayDeathSound();
 
         // Gameplay
         Refresh();
