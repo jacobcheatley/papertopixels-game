@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class PlayerUI : MonoBehaviour
 {
     [SerializeField] private Image dashCooldownImage;
-    [SerializeField] private Text ammoCountText;
+    [SerializeField] private Image ammoCountImage;
     [SerializeField] private Image healthBarImage;
     [SerializeField] private GameObject canvas;
     [SerializeField] private Vector3 offset;
@@ -38,14 +38,14 @@ public class PlayerUI : MonoBehaviour
 
     public void SetAmmo(int newCount)
     {
-        ammoCountText.text = newCount.ToString();
+        ammoCountImage.fillAmount = newCount / 6f;
     }
 
     public void StartCooldown(float time)
     {
         StartCoroutine(CooldownDisplay(time));
     }
-
+    
     private IEnumerator CooldownDisplay(float time)
     {
         dashCooldownImage.gameObject.SetActive(true);
