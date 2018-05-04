@@ -49,7 +49,7 @@ public class PlayerJoin : MonoBehaviour
             else if (state.Buttons.Start == ButtonState.Pressed && nextSlotNumber > 1 && joined[i])
             {
                 Persistent.LobbyController = index;
-                StartGame();
+                LevelSelect();
                 break;
             }
         }
@@ -57,6 +57,7 @@ public class PlayerJoin : MonoBehaviour
 
     private void AssignNextSlot(PlayerIndex index)
     {
+        SoundManager.PlayJoinSound();
         playerPens[nextSlotNumber].Init(index, ignoreIndices);
         nextSlotNumber++;
         UpdateHoverPosition();
@@ -72,8 +73,9 @@ public class PlayerJoin : MonoBehaviour
             playerPens[nextSlotNumber].SetAsNext();
     }
 
-    private void StartGame()
+    private void LevelSelect()
     {
+        SoundManager.PlayLevelSelectSound();
         Debug.Log("Start Game");
         Persistent.SetPlayerSlots(playerPens.Take(nextSlotNumber).Select(s => s.GetInfo()).ToList());
         SceneControl.ToLevelSelect();

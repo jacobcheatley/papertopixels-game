@@ -426,3 +426,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e4ff3acb218234e43beef9b0a47704c0, type: 3}
   deathSounds:
   - {fileID: 8300000, guid: 8a5df4448b03b7942a26ab9013aed934, type: 3}
+  clickSounds:
+  - {fileID: 8300000, guid: 774b3c7213c85094a8c599551ca2fbfc, type: 3}
+  positiveSounds: []
+  negativeSounds:
+  - {fileID: 8300000, guid: ee9ec3765f341144c91eaefde0608131, type: 3}
+  joinSounds:
+  - {fileID: 8300000, guid: 17317dce771025f409b3cec6703d0d46, type: 3}
+  levelSelectSounds:
+  - {fileID: 8300000, guid: 3f1c2afa2b4af7c44a8d3cc4d0d97fd2, type: 3}
+  startSounds:
+  - {fileID: 8300000, guid: cecc9765e9ed20c42a7dc640be2851ea, type: 3}

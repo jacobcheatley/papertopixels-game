@@ -84,20 +84,33 @@ public class Thumbs : MonoBehaviour
 
             if (Controller.LeftPress(prevState, state))
             {
-                index--;
-                StartCoroutine(BounceSize(leftArrow));
-                if (index < 0) index = 0;
-                else SnapToIndex();
+                if (index != 0)
+                {
+                    index--;
+                    StartCoroutine(BounceSize(leftArrow));
+                    SnapToIndex();
+                }
+                else
+                {
+                    SoundManager.PlayNegativeSound();
+                }
             }
             else if (Controller.RightPress(prevState, state))
             {
-                index++;
-                StartCoroutine(BounceSize(rightArrow));
-                if (index >= thumbs.Count) index = thumbs.Count - 1;
-                else SnapToIndex();
+                if (index != thumbs.Count - 1)
+                {
+                    index++;
+                    StartCoroutine(BounceSize(rightArrow));
+                    SnapToIndex();
+                }
+                else
+                {
+                    SoundManager.PlayNegativeSound();
+                }
             }
             else if (state.Buttons.A == ButtonState.Pressed && prevState.Buttons.A == ButtonState.Released)
             {
+                SoundManager.PlayStartSound();
                 SceneControl.ToGame(ids[index]);
             }
         }
@@ -120,6 +133,7 @@ public class Thumbs : MonoBehaviour
         leftArrow.color = new Color(1, 1, 1,  index == 0 ? 0 : 0.5f);
         rightArrow.color = new Color(1, 1, 1,  index == thumbs.Count - 1 ? 0 : 0.5f);
 
+        SoundManager.PlayClickSound();
         LevelPreview.Create(maps[index]);
     }
 

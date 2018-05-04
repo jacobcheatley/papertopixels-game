@@ -6,7 +6,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource sfxSource;
     [SerializeField] private AudioSource musicSource;
 
-    [Header("Clips")]
+    [Header("Clips - Gameplay")]
     [SerializeField] private AudioClip[] hitSounds;
     [SerializeField] private AudioClip[] explodeSounds;
     [SerializeField] private AudioClip[] shootSounds;
@@ -14,6 +14,14 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip[] dashSounds;
     [SerializeField] private AudioClip[] reloadSounds;
     [SerializeField] private AudioClip[] deathSounds;
+
+    [Header("Clips - Menus")]
+    [SerializeField] private AudioClip[] clickSounds;
+    [SerializeField] private AudioClip[] positiveSounds;
+    [SerializeField] private AudioClip[] negativeSounds;
+    [SerializeField] private AudioClip[] joinSounds;
+    [SerializeField] private AudioClip[] levelSelectSounds;
+    [SerializeField] private AudioClip[] startSounds;
 
     private static SoundManager instance;
 
@@ -65,5 +73,35 @@ public class SoundManager : MonoBehaviour
     public static void PlayDeathSound()
     {
         PlayRandomClip(instance.deathSounds, 0.5f);
+    }
+
+    public static void PlayClickSound()
+    {
+        PlayRandomClip(instance.clickSounds, 0.5f);
+    }
+
+    public static void PlayPositiveSound()
+    {
+        PlayRandomClip(instance.positiveSounds, 0.5f);
+    }
+
+    public static void PlayNegativeSound()
+    {
+        PlayRandomClip(instance.negativeSounds, 0.5f);
+    }
+
+    public static void PlayJoinSound()
+    {
+        PlayRandomClip(instance.joinSounds, 0.5f);
+    }
+
+    public static void PlayLevelSelectSound()
+    {
+        PlayRandomClip(instance.levelSelectSounds, 0.5f);
+    }
+
+    public static void PlayStartSound()
+    {
+        PlayRandomClip(instance.startSounds, 0.5f);
     }
 }
