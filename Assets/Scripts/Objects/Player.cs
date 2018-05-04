@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using XInputDotNetPure;
 
@@ -14,6 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] private LineRenderer aimLine;
     [SerializeField] private GameObject deathExplosionPrefab;
     [SerializeField] private Transform gunTransform;
+    [SerializeField] private GameObject killFairyPrefab;
     [Header("Control")]
     [SerializeField] private float accelFactor = 8.0f;
     [Header("Dash")]
@@ -134,14 +136,14 @@ public class Player : MonoBehaviour
 
         SoundManager.PlayHitSound();
 
-        return TakeDamage(damage);
+        return TakeDamage(damage, source);
     }
 
     public void LavaHit()
     {
         if (lavaDamagedRecently) return;
 
-        if (!TakeDamage())
+        if (!TakeDamage(source: lastDamagedBy))
             StartCoroutine(LavaCooldown());
         else
         {
@@ -152,7 +154,7 @@ public class Player : MonoBehaviour
         SoundManager.PlayLavaSound();
     }
 
-    private bool TakeDamage(int damage = 1)
+    private bool TakeDamage(int damage = 1, PlayerIndex? source = null)
     {
         // Return true if die
         health -= damage;
@@ -161,7 +163,10 @@ public class Player : MonoBehaviour
 
         if (health == 0)
         {
-            Respawn();
+            if (source == null)
+                Respawn();
+            else
+                Respawn(Persistent.PlayerObjects.First(p => p.GetComponent<Player>().playerIndex == source).transform);
             Stats.Deaths++;
             return true;
         }
@@ -252,7 +257,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Respawn()
+    private void Respawn(Transform killer = null)
     {
         // Explosion
         GameObject explosion = Instantiate(deathExplosionPrefab, transform.position, Quaternion.identity);
@@ -260,6 +265,14 @@ public class Player : MonoBehaviour
         var main = ps.main;
         main.startColor = GetColor();
         Destroy(explosion, 2f);
+
+        // Kill Fairy
+        if (killer != null)
+        {
+            GameObject killFairy = Instantiate(killFairyPrefab, transform.position, Quaternion.identity);
+            KillFairy kf = killFairy.GetComponent<KillFairy>();
+            kf.Init(GetColor(), killer);
+        }
 
         // SFX
         SoundManager.PlayDeathSound();
