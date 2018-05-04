@@ -15,6 +15,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip[] reloadSounds;
     [SerializeField] private AudioClip[] healSounds;
     [SerializeField] private AudioClip[] deathSounds;
+    [SerializeField] private AudioClip[] dingSounds;
 
     [Header("Clips - Menus")]
     [SerializeField] private AudioClip[] clickSounds;
@@ -79,6 +80,11 @@ public class SoundManager : MonoBehaviour
     public static void PlayDeathSound()
     {
         PlayRandomClip(instance.deathSounds, 0.5f);
+    }
+
+    public static void PlayDingSound()
+    {
+        PlayRandomClip(instance.dingSounds, 0.5f);
     }
 
     public static void PlayClickSound()

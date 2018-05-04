@@ -407,10 +407,7 @@ MonoBehaviour:
   sfxSource: {fileID: 401518061}
   musicSource: {fileID: 0}
   hitSounds:
-  - {fileID: 8300000, guid: db2aa340b8ecad740a56db1a741379c2, type: 3}
-  - {fileID: 8300000, guid: 6b1fed483c501f843b3a97d0f6bc215a, type: 3}
-  - {fileID: 8300000, guid: c12e32488d2f4ef448a65a6362c2c832, type: 3}
-  - {fileID: 8300000, guid: 537b46de57136df468f67a2e02422d10, type: 3}
+  - {fileID: 8300000, guid: 7b02be8d47d6f8a498f189d01365d776, type: 3}
   explodeSounds:
   - {fileID: 8300000, guid: 7bba9992ae0be4e4eb260206aa56afa7, type: 3}
   - {fileID: 8300000, guid: a41069ccf6ce12e49ba7e833b0161c56, type: 3}
@@ -428,6 +425,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ab988078d314b724eb4acd813d0af429, type: 3}
   deathSounds:
   - {fileID: 8300000, guid: 8a5df4448b03b7942a26ab9013aed934, type: 3}
+  dingSounds:
+  - {fileID: 8300000, guid: 44ab094e69ba86b44abd85bbea955117, type: 3}
   clickSounds:
   - {fileID: 8300000, guid: 774b3c7213c85094a8c599551ca2fbfc, type: 3}
   positiveSounds: []

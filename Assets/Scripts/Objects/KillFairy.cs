@@ -41,7 +41,7 @@ public class KillFairy : MonoBehaviour
     {
         if (other.transform == target)
         {
-            Debug.Log("COLLECTED");
+            SoundManager.PlayDingSound();
             Destroy(gameObject);
         }
     }
