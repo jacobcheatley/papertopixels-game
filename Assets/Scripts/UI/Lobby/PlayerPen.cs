@@ -116,6 +116,7 @@ public class PlayerPen : MonoBehaviour
         }
 
         colorIndex = indexToTry;
+        SoundManager.PlayClickSound();
         DisplayColor();
     }
 
@@ -130,6 +131,7 @@ public class PlayerPen : MonoBehaviour
         }
 
         colorIndex = indexToTry;
+        SoundManager.PlayClickSound();
         DisplayColor();
     }
 

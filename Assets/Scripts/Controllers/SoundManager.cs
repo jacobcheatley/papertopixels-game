@@ -13,6 +13,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip[] lavaSounds;
     [SerializeField] private AudioClip[] dashSounds;
     [SerializeField] private AudioClip[] reloadSounds;
+    [SerializeField] private AudioClip[] healSounds;
     [SerializeField] private AudioClip[] deathSounds;
 
     [Header("Clips - Menus")]
@@ -68,6 +69,11 @@ public class SoundManager : MonoBehaviour
     public static void PlayReloadSound()
     {
         PlayRandomClip(instance.reloadSounds, 0.5f);
+    }
+
+    public static void PlayHealSound()
+    {
+        PlayRandomClip(instance.healSounds, 0.5f);
     }
 
     public static void PlayDeathSound()

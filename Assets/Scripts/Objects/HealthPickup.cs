@@ -4,6 +4,7 @@
     {
         if (!player.RefillHealth()) return false;
 
+        SoundManager.PlayHealSound();
         return true;
     }
 }
