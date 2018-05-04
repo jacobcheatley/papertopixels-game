@@ -42,9 +42,9 @@ public class StatCard : MonoBehaviour
 
     void Update()
     {
-        if (stats.Kills != currentKills || stats.Deaths != currentDeaths)
+        if (stats.TotalKills != currentKills || stats.Deaths != currentDeaths)
         {
-            currentKills = stats.Kills;
+            currentKills = stats.TotalKills;
             currentDeaths = stats.Deaths;
             kdCounter.text = $"{currentKills}/{currentDeaths}";
         }

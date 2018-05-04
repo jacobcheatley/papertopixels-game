@@ -28,11 +28,11 @@ public class EndStatCard : MonoBehaviour
 
         // Set up texts
         playerText.text = $"Player {playerNumber}";
-        killsText.text = stats.Kills.ToString();
+        killsText.text = stats.TotalKills.ToString();
         deathsText.text = stats.Deaths.ToString();
         damageText.text = $"{stats.DamageDealt} : {stats.DamageTaken}";
         accuracyText.text = $"{stats.ShotsHit} / {stats.ShotsFired}";
-        dashesText.text = stats.Dashes.ToString();
+        dashesText.text = stats.DashesLaunched.ToString();
 
         // Set up image components
         backgroundImage.color = slotInfo.Color;

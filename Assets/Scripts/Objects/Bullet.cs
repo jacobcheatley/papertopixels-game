@@ -30,8 +30,7 @@ public class Bullet : MonoBehaviour
     {
         this.color = color;
 
-        Material newMaterial = new Material(meshRenderer.material);
-        newMaterial.color = color;
+        Material newMaterial = new Material(meshRenderer.material) {color = color};
         meshRenderer.material = newMaterial;
 
         // Trail renderer color
@@ -52,7 +51,8 @@ public class Bullet : MonoBehaviour
             Persistent.PlayerStats[index].ShotsHit++;
             Player player = g.GetComponent<Player>();
             Explode();
-            player.Damage(index, 1);
+            if (player.Damage(index))
+                Persistent.PlayerStats[index].ShotKills++;
         }
         else if (g.tag == "Wall")
         {

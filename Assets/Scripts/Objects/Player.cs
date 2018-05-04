@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
 
     // Private Variables
     private PlayerIndex playerIndex;
+    private PlayerIndex? lastDamagedBy = null;
     private Rigidbody rb;
     private Collider col;
     private bool dashing = false;
@@ -112,38 +113,48 @@ public class Player : MonoBehaviour
         {
             if (dashing)
             {
-                Player player = g.GetComponent<Player>();
-                player.Damage(playerIndex, 1);
+                Player otherPlayer = g.GetComponent<Player>();
+                Persistent.PlayerStats[playerIndex].DashesHit++;
+                if (otherPlayer.Damage(playerIndex))
+                {
+                    Persistent.PlayerStats[playerIndex].DashKills++;
+                    Debug.Log("Dash kill");
+                }
             }
 
         }
     }
 
-    public void Damage(PlayerIndex source, int damage)
+    public bool Damage(PlayerIndex source, int damage = 1)
     {
-        Debug.Log($"{source} -> {playerIndex}");
-
+        // Return true if die
         GameStats sourceStats = Persistent.PlayerStats[source];
         sourceStats.DamageDealt += damage;
-
-        if (TakeDamage(damage))
-            sourceStats.Kills++;
+        lastDamagedBy = source;
 
         SoundManager.PlayHitSound();
+
+        return TakeDamage(damage);
     }
 
     public void LavaHit()
     {
-        if (!lavaDamagedRecently)
+        if (lavaDamagedRecently) return;
+
+        if (!TakeDamage())
+            StartCoroutine(LavaCooldown());
+        else
         {
-            if (!TakeDamage(1))
-                StartCoroutine(LavaCooldown());
-            SoundManager.PlayLavaSound();
+            if (lastDamagedBy != null)
+                Persistent.PlayerStats[(PlayerIndex) lastDamagedBy].LavaKills++;
         }
+
+        SoundManager.PlayLavaSound();
     }
 
-    private bool TakeDamage(int damage)
+    private bool TakeDamage(int damage = 1)
     {
+        // Return true if die
         health -= damage;
         playerUI.SetHealth(health, maxHealth);
         Stats.DamageTaken += damage;
@@ -217,7 +228,7 @@ public class Player : MonoBehaviour
         if (state.Buttons.Y == ButtonState.Pressed && prevState.Buttons.Y == ButtonState.Released)
         {
             Debug.Log($"Stats for {playerIndex} ({GetColor()})\n" +
-                      $"K/D: {Stats.Kills} / {Stats.Deaths} | DMG: {Stats.DamageDealt} / {Stats.DamageTaken}");
+                      $"K/D: {Stats.ShotKills} / {Stats.Deaths} | DMG: {Stats.DamageDealt} / {Stats.DamageTaken}");
         }
     }
 
@@ -267,6 +278,7 @@ public class Player : MonoBehaviour
         dashing = false;
         canShoot = true;
         damagedRecently = 0;
+        lastDamagedBy = null;
         GamePad.SetVibration(playerIndex, 0, 0);
         playerUI.SetAmmo(ammo);
         rb.velocity = Vector3.zero;
@@ -294,7 +306,7 @@ public class Player : MonoBehaviour
         SoundManager.PlayDashSound();
         dashing = true;
         canDash = false;
-        Stats.Dashes++;
+        Stats.DashesLaunched++;
         rb.velocity = dashSpeed * direction;
         playerUI.StartCooldown(dashCooldown + dashDuration);
         yield return new WaitForSeconds(dashDuration);

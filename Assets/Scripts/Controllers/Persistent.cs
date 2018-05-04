@@ -28,7 +28,7 @@ public class Persistent : MonoBehaviour
     public static List<PlayerIndex> PlayerPlacings()
     {
         return PlayerStats.ToList()
-            .OrderByDescending(p => p.Value.Kills) // Highest kills
+            .OrderByDescending(p => p.Value.TotalKills) // Highest kills
             .ThenBy(p => p.Value.Deaths) // Lowest deaths
             .ThenByDescending(p => p.Value.DamageDealt) // Most damage dealt
             .ThenBy(p => p.Value.DamageTaken) // Least damage taken
@@ -40,13 +40,18 @@ public class Persistent : MonoBehaviour
 
 public class GameStats
 {
+    public int TotalKills => DashKills + ShotKills + LavaKills;
+
     public int DamageDealt = 0;
     public int DamageTaken = 0;
-    public int Kills = 0;
     public int Deaths = 0;
     public int ShotsFired = 0;
     public int ShotsHit = 0;
-    public int Dashes = 0;
+    public int ShotKills = 0;
+    public int DashesLaunched = 0;
+    public int DashesHit = 0;
+    public int DashKills = 0;
+    public int LavaKills = 0;
 
     // TOOD: Global stats, kill logs and times for timeline
 }
