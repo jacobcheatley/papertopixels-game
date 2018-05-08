@@ -12,6 +12,7 @@ public class PlayerJoin : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private float penSpacing = 8;
+    [SerializeField] private float penVertical = -1;
 
     private PlayerPen[] playerPens = new PlayerPen[4];
     private bool[] joined = { false, false, false, false };
@@ -26,7 +27,7 @@ public class PlayerJoin : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             GameObject newPen = Instantiate(penPrefab, penContainer);
-            newPen.transform.localPosition = Vector3.right * i * penSpacing;
+            newPen.transform.localPosition = Vector3.right * i * penSpacing + Vector3.forward * penVertical;
             playerPens[i] = newPen.GetComponent<PlayerPen>();
         }
 
