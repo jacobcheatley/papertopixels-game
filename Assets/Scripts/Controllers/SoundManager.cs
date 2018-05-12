@@ -16,6 +16,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip[] healSounds;
     [SerializeField] private AudioClip[] deathSounds;
     [SerializeField] private AudioClip[] dingSounds;
+    [SerializeField] private AudioClip[] gunClickSounds;
 
     [Header("Clips - Menus")]
     [SerializeField] private AudioClip[] clickSounds;
@@ -24,6 +25,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip[] joinSounds;
     [SerializeField] private AudioClip[] levelSelectSounds;
     [SerializeField] private AudioClip[] startSounds;
+    [SerializeField] private AudioClip[] endSounds;
 
     private static SoundManager instance;
 
@@ -87,6 +89,11 @@ public class SoundManager : MonoBehaviour
         PlayRandomClip(instance.dingSounds, 0.5f);
     }
 
+    public static void PlayGunClickSound()
+    {
+        PlayRandomClip(instance.gunClickSounds, 0.25f);
+    }
+
     public static void PlayClickSound()
     {
         PlayRandomClip(instance.clickSounds, 0.5f);
@@ -115,5 +122,10 @@ public class SoundManager : MonoBehaviour
     public static void PlayStartSound()
     {
         PlayRandomClip(instance.startSounds, 0.5f);
+    }
+
+    public static void PlayEndSound()
+    {
+        PlayRandomClip(instance.endSounds, 0.5f);
     }
 }

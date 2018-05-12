@@ -76,7 +76,6 @@ public class PlayerJoin : MonoBehaviour
 
     private void LevelSelect()
     {
-        SoundManager.PlayLevelSelectSound();
         Debug.Log("Start Game");
         Persistent.SetPlayerSlots(playerPens.Take(nextSlotNumber).Select(s => s.GetInfo()).ToList());
         SceneControl.ToLevelSelect();

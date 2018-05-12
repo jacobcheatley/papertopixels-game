@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
     private bool dashing = false;
     private bool canDash = true;
     private bool canShoot = true;
+    private bool canFailToShoot = true;
     private bool lavaDamagedRecently = false;
     private GamePadState state;
     private GamePadState prevState;
@@ -197,7 +198,7 @@ public class Player : MonoBehaviour
     private void Shooting()
     {
         Vector3 rightStick = new Vector3(state.ThumbSticks.Right.X, 0, state.ThumbSticks.Right.Y).normalized;
-        shooting = ammo > 0 && (state.Triggers.Right >= triggerThreshold ||
+        shooting = (state.Triggers.Right >= triggerThreshold ||
             state.Buttons.RightShoulder == ButtonState.Pressed && prevState.Buttons.RightShoulder == ButtonState.Released);
 
         if (rightStick.sqrMagnitude >= deadMag)
@@ -254,6 +255,10 @@ public class Player : MonoBehaviour
             Stats.ShotsFired++;
 
             SoundManager.PlayShootSound();
+        }
+        else if (ammo == 0 && canFailToShoot)
+        {
+            StartCoroutine(FailToShoot());
         }
     }
 
@@ -312,6 +317,14 @@ public class Player : MonoBehaviour
         }
         gunTransform.localPosition = originalPosition;
         canShoot = true;
+    }
+
+    private IEnumerator FailToShoot()
+    {
+        canFailToShoot = false;
+        SoundManager.PlayGunClickSound();
+        yield return new WaitForSeconds(shootCooldown);
+        canFailToShoot = true;
     }
 
     private IEnumerator Dash(Vector3 direction)

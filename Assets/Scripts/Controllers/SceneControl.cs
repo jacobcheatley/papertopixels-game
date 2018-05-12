@@ -23,18 +23,21 @@ public class SceneControl : MonoBehaviour
     
     public static void ToLevelSelect()
     {
+        SoundManager.PlayLevelSelectSound();
         instance.StartCoroutine(instance.LevelSelect_());
     }
 
     public static void ToGame(int id)
     {
         Controller.EndAllVibration();
+        SoundManager.PlayStartSound();
         instance.StartCoroutine(instance.Game_(id));
     }
 
     public static void ToEndGame()
     {
         Controller.EndAllVibration();
+        SoundManager.PlayEndSound();
         instance.StartCoroutine(instance.EndGame_());
     }
 

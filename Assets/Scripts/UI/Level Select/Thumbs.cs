@@ -110,7 +110,6 @@ public class Thumbs : MonoBehaviour
             }
             else if (state.Buttons.A == ButtonState.Pressed && prevState.Buttons.A == ButtonState.Released)
             {
-                SoundManager.PlayStartSound();
                 SceneControl.ToGame(ids[index]);
             }
         }
