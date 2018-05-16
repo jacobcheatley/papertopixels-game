@@ -4,15 +4,16 @@ using UnityEngine.UI;
 
 public class TimerUI : MonoBehaviour
 {
-    private int roundTime = Persistent.Configs.time;
     [SerializeField] private Text text;
     [SerializeField] private AudioClip beepSound;
     [SerializeField] private Light warnLight;
+    [SerializeField] private Image radial;
 
     private Light mainLight;
     private int timeRemaining;
     private Color cameraOriginal;
     private float mainIntensity;
+    private int roundTime = Persistent.Configs.time;
 
     public void Init()
     {
@@ -28,6 +29,7 @@ public class TimerUI : MonoBehaviour
         while (timeRemaining > 0)
         {
             text.text = timeRemaining.ToString();
+            radial.fillAmount = 1 - (float)timeRemaining / roundTime;
             yield return new WaitForSeconds(1);
             timeRemaining--;
             if (timeRemaining == 11)
