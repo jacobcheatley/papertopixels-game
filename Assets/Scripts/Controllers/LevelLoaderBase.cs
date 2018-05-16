@@ -139,6 +139,10 @@ public class LevelLoaderBase : MonoBehaviour
                 // Create wall segment
                 GameObject section = Instantiate(prefabs.wallSegment, (point + next) / 2f + Vector3.up, Quaternion.LookRotation(point - next), wall.transform);
                 section.transform.localScale = new Vector3(wallThickness, 2, Vector3.Distance(point, next));
+
+                // Generate black central mesh
+                MeshGenerator wallMesh = Instantiate(prefabs.wallDynamic, levelContainer).GetComponent<MeshGenerator>();
+                wallMesh.Init(line.Points);
             }
         }
     }

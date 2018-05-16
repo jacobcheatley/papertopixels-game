@@ -1,31 +1,7 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Lava : MonoBehaviour
+public class Lava : MeshGenerator
 {
-    [SerializeField] private MeshFilter filter;
-    [SerializeField] private MeshCollider col;
-
-    public void Init(Vector3[] points)
-    {
-        Vector2[] points2d = points.Select(v => new Vector2(v.x, v.z)).ToArray();
-
-        Triangulator tr = new Triangulator(points2d);
-        int[] indices = tr.Triangulate();
-
-        Mesh mesh = new Mesh();
-        mesh.vertices = points;
-        mesh.triangles = indices;
-        mesh.RecalculateNormals();
-        mesh.RecalculateBounds();
-        mesh.uv = points2d.Select(v => v / 10f).ToArray();
-        mesh.RecalculateTangents();
-
-        filter.mesh = mesh;
-        col.sharedMesh = mesh;
-        transform.position = Vector3.up * 0.05f;
-    }
-
     void OnTriggerEnter(Collider other)
     {
         HandleCollision(other);

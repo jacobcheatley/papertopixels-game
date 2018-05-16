@@ -16,6 +16,8 @@ MonoBehaviour:
   wallCorner: {fileID: 1209458353187574, guid: bfe9cedda96a94643aef2ee69f00d961, type: 2}
   wallSegment: {fileID: 1737489127416642, guid: e140a3fc30c86564987e9c4dcb216add,
     type: 2}
+  wallDynamic: {fileID: 1209458353187574, guid: f04d4bc3a7c308b4eb8360ffd4f5e9dd,
+    type: 2}
   ammoPrefab: {fileID: 1350314307204662, guid: 0b7a7294c41fee14288c4e2778d21dfb, type: 2}
   healthPrefab: {fileID: 1417461120685802, guid: 496ee5993c246854e8a65e813a8caf70,
     type: 2}
